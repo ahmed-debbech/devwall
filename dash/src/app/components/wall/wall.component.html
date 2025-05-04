@@ -14,37 +14,28 @@
 
 <div class="row">
   <div class="col-12 col-md-12 col-lg-12">
-    <div class="card">
+    <div *ngFor="let post of posts" class="card">
       <div class="card-header">
         <div class="author-box-name">
           <a href="#">
-            <h4 class="text-wrap">How to write asedaiofvj;oik sejdawfviojsu iofedjviluhwsefuil rvhiu erhfihwe
-              rifghnything in java</h4>
+            <h4 class="text-wrap">{{post.title}}</h4>
           </a>
+          <p>{{post.date}}</p>
         </div>
+
         <div class="card-header-action d-flex justify-content-end gap-2">
-          <a href="#" class="btn btn-outline-success btn-sm mr-1"><i class="fas fa-lightbulb"></i> Useful (10)</a>
-          <a href="#" class="btn btn-outline-danger btn-sm"><i class="fas fa-lightbulb"></i> Not Useful (10)</a> </div>
+          <a href="#" class="btn btn-outline-success btn-sm mr-1"><i class="fas fa-lightbulb"></i> Useful ({{post.useful}})</a>
+          <a href="#" class="btn btn-outline-danger btn-sm"><i class="fas fa-lightbulb"></i> Not Useful ({{post.notUseful}})</a> 
+        </div>
       </div>
       <div class="collapse show" id="mycard-collapse">
         <div class="card-body">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat.Lorem ipsum awerdfheklrj;gfkjhenrtjkgrnhjhiklertbngdolor sit amet, consectetur adipisicing elit, sed
-          do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat.
+          {{post.body}}
         </div>
         <div class="card-footer">
           <div class="mb-2 mt-3">
             <div class="text-small font-weight-bold"><a href="#" class=" m-1 badge badge-light">Java</a>
-              <a href="#" class="m-1 badge badge-light">Spring boot</a>
-              <a href="#" class="m-1 badge badge-light">Spring boot</a>
-              <a href="#" class="m-1 badge badge-light">Spring boot</a>
-              <a href="#" class="m-1 badge badge-light">Spring boot</a>
-              <a href="#" class="m-1 badge badge-light">Apache Kafka</a>
+              <a *ngFor="let tag of post.tags" href="#" class="m-1 badge badge-light">{{tag}}</a>
             </div>
           </div>
           <a href="#" class="btn mr-1 btn-github">

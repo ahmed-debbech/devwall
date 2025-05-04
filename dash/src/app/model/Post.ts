@@ -1,8 +1,9 @@
 export class Post{
-    color : string = "";
-    firstEnter : number = 0;
+    title : string = "";
+    date : string = "";
     id : number = 0;
-    ip : string = ""
-    name : string = "";
-    _id : string = "";
+    tags : string[] = [];
+    body : string = "";
+    useful : number = 0;
+    notUseful : number = 0;
 }
