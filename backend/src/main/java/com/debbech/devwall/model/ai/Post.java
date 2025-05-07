@@ -20,9 +20,13 @@ public class Post {
     private String createdAt;
     private String body;
 
-    @OneToOne
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "write_request_id", referencedColumnName = "id")
     private WriteRequest writeRequest;
-    @OneToOne
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "write_response_id", referencedColumnName = "id")
     private WriteResponse writeResponse;
 
 }

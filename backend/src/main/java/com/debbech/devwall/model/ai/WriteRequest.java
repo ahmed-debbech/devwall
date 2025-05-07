@@ -10,10 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity
-@Getter
-@Setter
-@ToString
+@Entity()
 public class WriteRequest {
 
     @Id
@@ -21,7 +18,29 @@ public class WriteRequest {
     private Long id;
 
     private String name;
-    private String desc;
+    private String body;
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String desc) {
+        this.body = desc;
+    }
 }

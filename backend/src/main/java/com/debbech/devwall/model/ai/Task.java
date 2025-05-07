@@ -7,9 +7,6 @@ import lombok.ToString;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
-@Getter
-@Setter
-@ToString
 public class Task {
 
     private WriteRequest writeRequest;
@@ -20,5 +17,45 @@ public class Task {
 
     public Task(WriteRequest wr) {
         this.writeRequest = wr;
+    }
+
+    public WriteRequest getWriteRequest() {
+        return writeRequest;
+    }
+
+    public void setWriteRequest(WriteRequest writeRequest) {
+        this.writeRequest = writeRequest;
+    }
+
+    public WriteResponse getWriteResponse() {
+        return writeResponse;
+    }
+
+    public void setWriteResponse(WriteResponse writeResponse) {
+        this.writeResponse = writeResponse;
+    }
+
+    public Boolean getFailed() {
+        return failed;
+    }
+
+    public void setFailed(Boolean failed) {
+        this.failed = failed;
+    }
+
+    public long getStartingTime() {
+        return startingTime;
+    }
+
+    public void setStartingTime(long startingTime) {
+        this.startingTime = startingTime;
+    }
+
+    public long getEndingTime() {
+        return endingTime;
+    }
+
+    public void setEndingTime(long endingTime) {
+        this.endingTime = endingTime;
     }
 }

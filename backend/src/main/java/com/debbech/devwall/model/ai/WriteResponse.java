@@ -11,9 +11,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Getter
-@Setter
-@ToString
 public class WriteResponse {
 
     @Id
@@ -26,4 +23,51 @@ public class WriteResponse {
     private long startTs;
     private long endTs;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getPlainResponse() {
+        return plainResponse;
+    }
+
+    public void setPlainResponse(String plainResponse) {
+        this.plainResponse = plainResponse;
+    }
+
+    public String getReqName() {
+        return ReqName;
+    }
+
+    public void setReqName(String reqName) {
+        ReqName = reqName;
+    }
+
+    public String getResponseGeneratedAt() {
+        return responseGeneratedAt;
+    }
+
+    public void setResponseGeneratedAt(String responseGeneratedAt) {
+        this.responseGeneratedAt = responseGeneratedAt;
+    }
+
+    public long getStartTs() {
+        return startTs;
+    }
+
+    public void setStartTs(long startTs) {
+        this.startTs = startTs;
+    }
+
+    public long getEndTs() {
+        return endTs;
+    }
+
+    public void setEndTs(long endTs) {
+        this.endTs = endTs;
+    }
 }

@@ -29,7 +29,7 @@ public class AiCallThread implements Callable<WriteResponse> {
     @Override
     public WriteResponse call() throws Exception {
 
-        ModelRequest modelRequest = new ModelRequest("llama3.2", writeRequest.getDesc(), false);
+        ModelRequest modelRequest = new ModelRequest("llama3.2", writeRequest.getBody(), false);
 
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = ow.writeValueAsString(modelRequest);
