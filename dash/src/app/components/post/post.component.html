@@ -4,7 +4,7 @@
     <div class="col-md-8 col-lg-8 col-md-8 col-sm-12">
         <div class="card">
             <div class="card-header">
-                <h4>Post number id</h4>
+                <h4>Post number {{post.id}}</h4>
             </div>
             <div class="card-body">
 
@@ -15,7 +15,7 @@
 
                             <div class="ticket-detail">
                                 <div class="ticket-title">
-                                    <h4>how to make things beautiful in java</h4>
+                                    <h4>{{post.title}}</h4>
                                 </div>
                                 <div class="ticket-info">
                                     <div class="font-weight-600">
@@ -31,7 +31,7 @@
                         <div class="ticket-divider"></div>
 
                         <div class="text-start w-100 ticket-description">
-                            <markdown ngPreserveWhitespaces>{{post_content}}</markdown>
+                            <app-markdown [text]="post.body"></app-markdown>
 
                             <div class="ticket-divider"></div>
 

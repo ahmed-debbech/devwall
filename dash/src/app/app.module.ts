@@ -9,6 +9,7 @@ import { WallComponent } from './components/wall/wall.component';
 import { PostComponent } from './components/post/post.component';
 import { NotFoundComponent } from './components/notfound/notfound.component';
 import { MarkdownModule } from 'ngx-markdown';
+import { MarkdownComponent } from './components/markdown/markdown.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { MarkdownModule } from 'ngx-markdown';
     SideBarComponent,
     WallComponent,
     PostComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    MarkdownComponent
   ],
   imports: [
     BrowserModule,
