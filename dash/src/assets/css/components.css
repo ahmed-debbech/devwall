@@ -1527,7 +1527,7 @@ tr:first-child > td > .fc-day-grid-event {
   margin: 0 10px;
 }
 .tickets .ticket-content {
-  width: 70%;
+  width: 100%;
 }
 .tickets .ticket-content .ticket-header {
   display: flex;
@@ -1564,7 +1564,6 @@ tr:first-child > td > .fc-day-grid-event {
 }
 .tickets .ticket-description {
   color: #34395e;
-  font-weight: 500;
   margin-top: 30px;
   line-height: 100%;
 }
@@ -1576,7 +1575,7 @@ tr:first-child > td > .fc-day-grid-event {
 }
 .tickets .ticket-description .ticket-form .note-editable {
   color: #34395e;
-  font-weight: 1000;
+  font-weight: 100%;
 }
 .tickets .ticket-description .ticket-form .note-editable p {
   margin-bottom: 5px;
