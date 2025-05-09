@@ -6,6 +6,7 @@ import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Date;
 
 public class Task {
 
@@ -17,6 +18,7 @@ public class Task {
 
     public Task(WriteRequest wr) {
         this.writeRequest = wr;
+        this.startingTime = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
     }
 
     public WriteRequest getWriteRequest() {
