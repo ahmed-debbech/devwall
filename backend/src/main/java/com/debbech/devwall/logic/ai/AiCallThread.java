@@ -36,7 +36,7 @@ public class AiCallThread implements Callable<WriteResponse> {
 
         long startTimestamp = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
 
-        String resp = this.doNetworkCall("xxx:11434", json);
+        String resp = this.doNetworkCall("192.168.1.10:11434", json);
 
         long endTimestamp = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
 

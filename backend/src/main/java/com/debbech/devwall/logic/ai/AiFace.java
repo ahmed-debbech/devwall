@@ -44,8 +44,11 @@ public class AiFace implements IAiFace{
 
         List<Task> taskList = inMemoryStore.getAll();
         List<Post> posts = new ArrayList<>();
+        int[] tasksIndex = new int[taskList.size()];
+        int i = -1;
+        int k = 0;
         for(Task s : taskList){
-
+            i++;
             if(s.getEndingTime() <= 0) continue;
 
             Post p = new Post();
@@ -56,13 +59,15 @@ public class AiFace implements IAiFace{
             p.setWriteRequest(s.getWriteRequest());
             p.setWriteResponse(s.getWriteResponse());
             posts.add(p);
+            tasksIndex[k] = i;
+            k++;
         }
 
-        int i = 0;
+        i = 0;
         for(Post p : posts) {
             try {
                 postRepo.save(p);
-                inMemoryStore.deleteOne(taskList.get(i));
+                inMemoryStore.deleteOne(taskList.get(tasksIndex[i]));
             } catch (Exception e) {
                 log.error("Could not save the post to database OR not delete post from inmemroy database " + e.getMessage());
             }

@@ -18,6 +18,8 @@ public class Post {
     private Long id;
     private String title;
     private String createdAt;
+
+    @Column(length = 4096)
     private String body;
 
 

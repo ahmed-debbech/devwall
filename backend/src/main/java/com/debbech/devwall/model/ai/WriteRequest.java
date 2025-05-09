@@ -1,10 +1,7 @@
 package com.debbech.devwall.model.ai;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +15,8 @@ public class WriteRequest {
     private Long id;
 
     private String name;
+
+    @Column(length = 4096)
     private String body;
 
     public Long getId() {
