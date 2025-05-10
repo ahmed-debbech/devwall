@@ -18,6 +18,7 @@ public class Post {
     private Long id;
     private String title;
     private String createdAt;
+    private String status;
 
     @Column(length = 4096)
     private String body;
@@ -37,10 +38,19 @@ public class Post {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", createdAt='" + createdAt + '\'' +
+                ", status='" + status + '\'' +
                 ", body='" + body + '\'' +
                 ", writeRequest=" + writeRequest +
                 ", writeResponse=" + writeResponse +
                 '}';
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Long getId() {

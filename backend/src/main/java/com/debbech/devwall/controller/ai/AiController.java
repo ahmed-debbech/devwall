@@ -20,16 +20,6 @@ public class AiController {
     private IInMemoryStore inMemoryStore;
 
 
-    @PostMapping("/write")
-    ResponseEntity<Object> write(@RequestBody WriteRequest writeRequest){
-
-
-        if(!inMemoryStore.addOne(new Task(writeRequest))) return ResponseEntity.status(HttpStatus.CONFLICT).body(writeRequest);
-
-        queueProcessor.add(writeRequest);
-
-        return ResponseEntity.ok().body(writeRequest);
-    }
     @GetMapping("/read")
     ResponseEntity<Object> read(){
 

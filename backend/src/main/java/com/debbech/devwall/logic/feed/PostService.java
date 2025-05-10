@@ -34,7 +34,7 @@ public class PostService implements IPostService{
         return sb.toString();
     }
 
-    @Scheduled(cron = "*/30 * * * * *")
+    @Scheduled(cron = "*/60 * * * * *")
     @Override
     public void generateNewPost() {
         log.info("generating a new post");
@@ -44,7 +44,11 @@ public class PostService implements IPostService{
         wr.setBody(topic);
 
         log.info("asking ai to generate about this topic {}", topic);
-        aiFace.addNewOne(wr);
+        if (aiFace.addNewOne(wr)){
+            log.info("AI said will do the writing");
+        }else{
+            log.info("AI said it won't do the job");
+        }
 
     }
 }

@@ -21,9 +21,11 @@ public class AiCallThread implements Callable<WriteResponse> {
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
     private WriteRequest writeRequest;
+    private String host;
 
-    public AiCallThread(WriteRequest writeRequest){
+    public AiCallThread(WriteRequest writeRequest, String hostip){
         this.writeRequest = writeRequest;
+        this.host = hostip;
     }
 
     @Override
@@ -36,7 +38,7 @@ public class AiCallThread implements Callable<WriteResponse> {
 
         long startTimestamp = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
 
-        String resp = this.doNetworkCall("192.168.1.10:11434", json);
+        String resp = this.doNetworkCall(this.host+":11434", json);
 
         long endTimestamp = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
 

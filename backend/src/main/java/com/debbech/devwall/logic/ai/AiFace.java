@@ -4,13 +4,16 @@ import com.debbech.devwall.database.IPostRepo;
 import com.debbech.devwall.model.feed.Post;
 import com.debbech.devwall.model.ai.Task;
 import com.debbech.devwall.model.ai.WriteRequest;
+import com.debbech.devwall.model.feed.PostStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -52,12 +55,19 @@ public class AiFace implements IAiFace{
             if(s.getEndingTime() <= 0) continue;
 
             Post p = new Post();
-            p.setBody(s.getWriteResponse().getPlainResponse());
+            if(s.getWriteResponse() == null){
+                p.setBody(null);
+                p.setStatus(PostStatus.FAILED.name());
+                p.setWriteResponse(null);
+            }else{
+                p.setStatus(PostStatus.DONE.name());
+                p.setBody(s.getWriteResponse().getPlainResponse());
+                p.setWriteResponse(s.getWriteResponse());
+            }
             //TODO: we can invoke code to extract title + tags
             p.setTitle("this is a title");
-            p.setCreatedAt(String.valueOf(new Date().getTime()));
             p.setWriteRequest(s.getWriteRequest());
-            p.setWriteResponse(s.getWriteResponse());
+            p.setCreatedAt(String.valueOf(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)));
             posts.add(p);
             tasksIndex[k] = i;
             k++;

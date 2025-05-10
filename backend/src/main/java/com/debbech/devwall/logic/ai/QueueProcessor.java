@@ -4,6 +4,7 @@ import com.debbech.devwall.model.ai.WriteRequest;
 import com.debbech.devwall.model.ai.WriteResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
@@ -14,6 +15,10 @@ import java.util.concurrent.*;
 public class QueueProcessor implements IQueueProcessor {
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
+
+    @Value("${ai.ip}")
+    private String host;
+
     private Queue<WriteRequest> waitQueue;
 
     private ExecutorService waitQueueProcessor;
@@ -44,7 +49,7 @@ public class QueueProcessor implements IQueueProcessor {
         if(wr == null) return;
 
         log.info("a request has been polled to be processed with name: {}", wr.getName());
-        Future<WriteResponse> resultToBe = this.waitQueueProcessor.submit(new AiCallThread(wr));
+        Future<WriteResponse> resultToBe = this.waitQueueProcessor.submit(new AiCallThread(wr, host));
         this.postProcessor.execute(new PrepareResponseTread(wr, resultToBe));
     }
 }
