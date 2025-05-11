@@ -9,5 +9,4 @@ class DevWallAppTests {
 	@Test
 	void contextLoads() {
 	}
-
 }

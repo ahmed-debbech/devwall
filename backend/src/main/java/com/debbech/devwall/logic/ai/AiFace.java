@@ -57,15 +57,21 @@ public class AiFace implements IAiFace{
             Post p = new Post();
             if(s.getWriteResponse() == null){
                 p.setBody(null);
+                p.setTitle(null);
                 p.setStatus(PostStatus.FAILED.name());
                 p.setWriteResponse(null);
+                //TODO set tags to null
             }else{
                 p.setStatus(PostStatus.DONE.name());
                 p.setBody(s.getWriteResponse().getPlainResponse());
                 p.setWriteResponse(s.getWriteResponse());
+                //TODO set title
+                //String title = this.extractTitle(s.getWriteResponse().getPlainResponse());
+                p.setTitle("hello");
+                //String tags = this.extractTags(s.getWriteResponse().getPlainResponse());
+                //TODO set tags
+
             }
-            //TODO: we can invoke code to extract title + tags
-            p.setTitle("this is a title");
             p.setWriteRequest(s.getWriteRequest());
             p.setCreatedAt(String.valueOf(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)));
             posts.add(p);
@@ -86,4 +92,5 @@ public class AiFace implements IAiFace{
 
         return 0;
     }
+
 }
