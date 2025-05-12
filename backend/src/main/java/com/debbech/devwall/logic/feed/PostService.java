@@ -67,8 +67,6 @@ public class PostService implements IPostService{
 
     private Post contructPost(Task s){
         Post p = new Post();
-        p.setBody(s.getWriteResponse().getPlainResponse());
-        p.setTitle(s.getWriteResponse().getTitle());
         System.err.println(s.getWriteResponse().getTags());
         p.setCreatedAt(String.valueOf(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)));
         p.setWriteRequest(s.getWriteRequest());
@@ -76,13 +74,21 @@ public class PostService implements IPostService{
 
         if(s.getWriteResponse().getTags() == null){
             p.setStatus(PostStatus.GETTING_TAGS.name());
+        }else{
+
+            p.setTags(s.getWriteResponse().getPlainResponse());
         }
         if(s.getWriteResponse().getTitle() == null){
             p.setStatus(PostStatus.GETTING_TITLE.name());
+        }else{
+            p.setTitle(s.getWriteResponse().getTitle());
         }
         if(s.getWriteResponse().getPlainResponse() == null){
             p.setStatus(PostStatus.GETTING_BODY.name());
+        }else{
+            p.setBody(s.getWriteResponse().getPlainResponse());
         }
+
         if(((s.getWriteResponse().getTags() != null) && (s.getWriteResponse().getTitle() != null) && (s.getWriteResponse().getPlainResponse() != null))){
             p.setStatus(PostStatus.DONE.name());
         }
