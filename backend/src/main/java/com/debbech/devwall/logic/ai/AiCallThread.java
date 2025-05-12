@@ -4,6 +4,7 @@ import com.debbech.devwall.model.ai.ModelRequest;
 import com.debbech.devwall.model.ai.ModelResponse;
 import com.debbech.devwall.model.ai.WriteRequest;
 import com.debbech.devwall.model.ai.WriteResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import okhttp3.*;
@@ -31,16 +32,44 @@ public class AiCallThread implements Callable<WriteResponse> {
     @Override
     public WriteResponse call() throws Exception {
 
-        ModelRequest modelRequest = new ModelRequest("llama3.2", writeRequest.getBody(), false);
-
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        String json = ow.writeValueAsString(modelRequest);
 
         long startTimestamp = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
 
-        String resp = this.doNetworkCall(this.host+":11434", json);
+        WriteResponse wres = new WriteResponse();
+        wres.setReqName(this.writeRequest.getName());
+        wres.setResponseGeneratedAt(String.valueOf(startTimestamp));
+        wres.setStartTs(startTimestamp);
+
+        ModelRequest modelRequest = new ModelRequest("llama3.2", writeRequest.getBody(), false);
+        String body = generate(modelRequest);
+        if(body == null){
+            wres.setPlainResponse(null);
+            long endTimestamp = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
+            wres.setEndTs(endTimestamp);
+            return wres;
+        }
+        wres.setPlainResponse(body);
+
+        ModelRequest modelRequest1 = new ModelRequest("llama3.2", "Give me one title for this and nothing more without quotes just a single title: " + body, false);
+        String title = generate(modelRequest1);
+        wres.setTitle(title);
+
+        ModelRequest modelRequest2 = new ModelRequest("llama3.2", "Give me few tags for this only make it one line and sperated with commas and nothing more: " + body, false);
+        String tags = generate(modelRequest2);
+        wres.setTags(tags);
 
         long endTimestamp = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
+        wres.setEndTs(endTimestamp);
+
+        return wres;
+    }
+
+
+    private String generate(ModelRequest modelRequest) throws JsonProcessingException {
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String json = ow.writeValueAsString(modelRequest);
+
+        String resp = this.doNetworkCall(this.host+":11434", json);
 
         if(resp != null) {
 
@@ -48,18 +77,13 @@ public class AiCallThread implements Callable<WriteResponse> {
             ModelResponse responseObj = objectMapper.readValue(resp, ModelResponse.class);
 
             if(responseObj.isDone()){
-                WriteResponse wres = new WriteResponse();
-                wres.setPlainResponse(responseObj.getResponse());
-                wres.setReqName(this.writeRequest.getName());
-                wres.setResponseGeneratedAt(responseObj.getCreated_at());
-                wres.setStartTs(startTimestamp);
-                wres.setEndTs(endTimestamp);
-                log.error(wres.toString());
-                return wres;
+                return responseObj.getResponse();
             }
         }
         return null;
     }
+
+
 
     private String doNetworkCall(String aiHost, String json){
 

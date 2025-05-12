@@ -2,6 +2,7 @@ package com.debbech.devwall.logic.ai;
 
 import com.debbech.devwall.model.ai.WriteRequest;
 import com.debbech.devwall.model.ai.WriteResponse;
+import com.debbech.devwall.model.feed.PostStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -50,6 +51,6 @@ public class QueueProcessor implements IQueueProcessor {
 
         log.info("a request has been polled to be processed with name: {}", wr.getName());
         Future<WriteResponse> resultToBe = this.waitQueueProcessor.submit(new AiCallThread(wr, host));
-        this.postProcessor.execute(new PrepareResponseTread(wr, resultToBe));
+        this.postProcessor.execute(new PrepareResponseTread(wr,  resultToBe));
     }
 }

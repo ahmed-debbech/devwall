@@ -12,7 +12,7 @@ public class Task {
 
     private WriteRequest writeRequest;
     private WriteResponse writeResponse;
-    private Boolean failed;
+
     private long startingTime;
     private long endingTime;
 
@@ -35,14 +35,6 @@ public class Task {
 
     public void setWriteResponse(WriteResponse writeResponse) {
         this.writeResponse = writeResponse;
-    }
-
-    public Boolean getFailed() {
-        return failed;
-    }
-
-    public void setFailed(Boolean failed) {
-        this.failed = failed;
     }
 
     public long getStartingTime() {

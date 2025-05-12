@@ -3,11 +3,14 @@ package com.debbech.devwall.model.feed;
 
 import com.debbech.devwall.model.ai.WriteRequest;
 import com.debbech.devwall.model.ai.WriteResponse;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.List;
 
 @Entity
 
@@ -23,6 +26,13 @@ public class Post {
     @Column(length = 4096)
     private String body;
 
+    @ManyToMany
+    @JoinTable(
+            joinColumns = @JoinColumn(name = "tag_id"),
+            inverseJoinColumns = @JoinColumn(name = "post_id")
+    )
+    @JsonManagedReference
+    private List<PostTag> tags;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "write_request_id", referencedColumnName = "id")
@@ -40,9 +50,18 @@ public class Post {
                 ", createdAt='" + createdAt + '\'' +
                 ", status='" + status + '\'' +
                 ", body='" + body + '\'' +
+                ", tags=" + tags +
                 ", writeRequest=" + writeRequest +
                 ", writeResponse=" + writeResponse +
                 '}';
+    }
+
+    public List<PostTag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<PostTag> tags) {
+        this.tags = tags;
     }
 
     public String getStatus() {

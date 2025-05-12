@@ -1,22 +1,12 @@
 package com.debbech.devwall.logic.ai;
 
-import com.debbech.devwall.database.IPostRepo;
-import com.debbech.devwall.model.feed.Post;
 import com.debbech.devwall.model.ai.Task;
 import com.debbech.devwall.model.ai.WriteRequest;
-import com.debbech.devwall.model.feed.PostStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @Service
 public class AiFace implements IAiFace{
@@ -27,8 +17,6 @@ public class AiFace implements IAiFace{
     private IQueueProcessor queueProcessor;
     @Autowired
     private IInMemoryStore inMemoryStore;
-    @Autowired
-    private IPostRepo postRepo;
 
     @Override
     public boolean addNewOne(WriteRequest writeRequest) {
@@ -39,58 +27,5 @@ public class AiFace implements IAiFace{
 
     }
 
-    @Scheduled(fixedDelay = 5000)
-    @Override
-    public int flushToDb() {
-
-        log.info("Flushing to database ....");
-
-        List<Task> taskList = inMemoryStore.getAll();
-        List<Post> posts = new ArrayList<>();
-        int[] tasksIndex = new int[taskList.size()];
-        int i = -1;
-        int k = 0;
-        for(Task s : taskList){
-            i++;
-            if(s.getEndingTime() <= 0) continue;
-
-            Post p = new Post();
-            if(s.getWriteResponse() == null){
-                p.setBody(null);
-                p.setTitle(null);
-                p.setStatus(PostStatus.FAILED.name());
-                p.setWriteResponse(null);
-                //TODO set tags to null
-            }else{
-                p.setStatus(PostStatus.DONE.name());
-                p.setBody(s.getWriteResponse().getPlainResponse());
-                p.setWriteResponse(s.getWriteResponse());
-                //TODO set title
-                //String title = this.extractTitle(s.getWriteResponse().getPlainResponse());
-                p.setTitle("hello");
-                //String tags = this.extractTags(s.getWriteResponse().getPlainResponse());
-                //TODO set tags
-
-            }
-            p.setWriteRequest(s.getWriteRequest());
-            p.setCreatedAt(String.valueOf(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)));
-            posts.add(p);
-            tasksIndex[k] = i;
-            k++;
-        }
-
-        i = 0;
-        for(Post p : posts) {
-            try {
-                postRepo.save(p);
-                inMemoryStore.deleteOne(taskList.get(tasksIndex[i]));
-            } catch (Exception e) {
-                log.error("Could not save the post to database OR not delete post from inmemroy database " + e.getMessage());
-            }
-            i++;
-        }
-
-        return 0;
-    }
 
 }

@@ -3,6 +3,8 @@ package com.debbech.devwall.logic.ai;
 import com.debbech.devwall.model.ai.Task;
 import com.debbech.devwall.model.ai.WriteRequest;
 import com.debbech.devwall.model.ai.WriteResponse;
+import com.debbech.devwall.model.feed.Post;
+import com.debbech.devwall.model.feed.PostStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +33,6 @@ public class PrepareResponseTread implements Runnable{
             Task task = new InMemoryStore().getOne(writeRequest.getName());
             task.setWriteResponse(wresp);
 
-            task.setFailed(wresp == null);
             task.setEndingTime(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
 
             new InMemoryStore().addOne(task);
