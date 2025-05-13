@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
@@ -31,6 +30,9 @@ public class PostService implements IPostService{
     private IInMemoryStore inMemoryStore;
     @Autowired
     private IPostRepo postRepo;
+    @Autowired
+    private IPostTagService postTagService;
+
 
     private String getRandomPrompt(){
         return "describe what is java in two lines";
@@ -75,8 +77,7 @@ public class PostService implements IPostService{
         if(s.getWriteResponse().getTags() == null){
             p.setStatus(PostStatus.GETTING_TAGS.name());
         }else{
-
-            p.setTags(s.getWriteResponse().getPlainResponse());
+            p.setTags(this.postTagService.prepareTags(s.getWriteResponse().getTags(), p));
         }
         if(s.getWriteResponse().getTitle() == null){
             p.setStatus(PostStatus.GETTING_TITLE.name());

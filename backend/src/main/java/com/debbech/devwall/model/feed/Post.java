@@ -10,7 +10,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 
@@ -26,13 +28,13 @@ public class Post {
     @Column(length = 4096)
     private String body;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
-            joinColumns = @JoinColumn(name = "tag_id"),
-            inverseJoinColumns = @JoinColumn(name = "post_id")
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     @JsonManagedReference
-    private List<PostTag> tags;
+    private Set<PostTag> tags;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "write_request_id", referencedColumnName = "id")
@@ -41,6 +43,11 @@ public class Post {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "write_response_id", referencedColumnName = "id")
     private WriteResponse writeResponse;
+
+
+    public Post() {
+        this.tags = new HashSet<>();
+    }
 
     @Override
     public String toString() {
@@ -56,11 +63,11 @@ public class Post {
                 '}';
     }
 
-    public List<PostTag> getTags() {
+    public Set<PostTag> getTags() {
         return tags;
     }
 
-    public void setTags(List<PostTag> tags) {
+    public void setTags(Set<PostTag> tags) {
         this.tags = tags;
     }
 

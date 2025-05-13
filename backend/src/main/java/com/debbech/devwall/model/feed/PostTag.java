@@ -3,7 +3,9 @@ package com.debbech.devwall.model.feed;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class PostTag {
@@ -13,8 +15,11 @@ public class PostTag {
     private String name;
     @ManyToMany(mappedBy = "tags")
     @JsonBackReference
-    private List<Post> posts;
+    private Set<Post> posts;
 
+    public PostTag() {
+        this.posts = new HashSet<>();
+    }
 
     @Override
     public String toString() {
@@ -33,11 +38,11 @@ public class PostTag {
         this.name = name;
     }
 
-    public List<Post> getPosts() {
+    public Set<Post> getPosts() {
         return posts;
     }
 
-    public void setPosts(List<Post> posts) {
+    public void setPosts(Set<Post> posts) {
         this.posts = posts;
     }
 }
