@@ -25,10 +25,10 @@ public class PostTagService implements IPostTagService{
         Set<PostTag> postTags = new HashSet<>();
 
         for(int i=0; i<= tags_splitted.length-1; i++) {
-            PostTag ptdb = tagRepo.findById(tags_splitted[i]).orElse(null);
+            PostTag ptdb = tagRepo.findByName(tags_splitted[i].trim()).orElse(null);
             if(ptdb == null) {
                 PostTag pt = new PostTag();
-                pt.setName(tags_splitted[i]);
+                pt.setName(tags_splitted[i].trim());
                 pt.getPosts().add(p);
                 postTags.add(pt);
             }else{

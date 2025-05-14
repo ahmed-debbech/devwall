@@ -1,6 +1,7 @@
 package com.debbech.devwall.model.feed;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -22,9 +23,20 @@ public class PostTag {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PostTag tag)) return false;
+        return name.equals(tag.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
+
+    @Override
     public String toString() {
         return "PostTag{" +
-                ", posts=" + posts +
                 ", name='" + name + '\'' +
                 '}';
     }

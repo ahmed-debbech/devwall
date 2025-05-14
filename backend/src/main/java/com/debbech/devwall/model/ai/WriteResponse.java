@@ -24,6 +24,20 @@ public class WriteResponse {
     private String tags;
 
 
+    @Override
+    public String toString() {
+        return "WriteResponse{" +
+                "id=" + id +
+                ", plainResponse='" + plainResponse + '\'' +
+                ", ReqName='" + ReqName + '\'' +
+                ", responseGeneratedAt='" + responseGeneratedAt + '\'' +
+                ", startTs=" + startTs +
+                ", endTs=" + endTs +
+                ", title='" + title + '\'' +
+                ", tags='" + tags + '\'' +
+                '}';
+    }
+
     public String getTitle() {
         return title;
     }

@@ -19,6 +19,16 @@ public class WriteRequest {
     @Column(length = 4096)
     private String body;
 
+
+    @Override
+    public String toString() {
+        return "WriteRequest{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", body='" + body + '\'' +
+                '}';
+    }
+
     public Long getId() {
         return id;
     }

@@ -74,6 +74,8 @@ public class PostService implements IPostService{
         p.setWriteRequest(s.getWriteRequest());
         p.setWriteResponse(s.getWriteResponse());
 
+        postRepo.save(p);
+
         if(s.getWriteResponse().getTags() == null){
             p.setStatus(PostStatus.GETTING_TAGS.name());
         }else{

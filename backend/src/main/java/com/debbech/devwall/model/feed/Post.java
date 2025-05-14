@@ -31,7 +31,7 @@ public class Post {
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             joinColumns = @JoinColumn(name = "post_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id")
+            inverseJoinColumns = @JoinColumn(name = "tag_name")
     )
     @JsonManagedReference
     private Set<PostTag> tags;
@@ -57,7 +57,6 @@ public class Post {
                 ", createdAt='" + createdAt + '\'' +
                 ", status='" + status + '\'' +
                 ", body='" + body + '\'' +
-                ", tags=" + tags +
                 ", writeRequest=" + writeRequest +
                 ", writeResponse=" + writeResponse +
                 '}';
