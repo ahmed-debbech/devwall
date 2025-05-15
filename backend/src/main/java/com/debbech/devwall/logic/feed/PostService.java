@@ -1,12 +1,15 @@
 package com.debbech.devwall.logic.feed;
 
 import com.debbech.devwall.database.IPostRepo;
+import com.debbech.devwall.database.IPostTagRepo;
 import com.debbech.devwall.logic.ai.IAiFace;
 import com.debbech.devwall.logic.ai.IInMemoryStore;
 import com.debbech.devwall.model.ai.Task;
 import com.debbech.devwall.model.ai.WriteRequest;
 import com.debbech.devwall.model.feed.Post;
 import com.debbech.devwall.model.feed.PostStatus;
+import com.debbech.devwall.model.feed.PostTag;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,7 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 @Service
 public class PostService implements IPostService{
@@ -30,6 +34,8 @@ public class PostService implements IPostService{
     private IInMemoryStore inMemoryStore;
     @Autowired
     private IPostRepo postRepo;
+    @Autowired
+    private IPostTagRepo tagRepo;
     @Autowired
     private IPostTagService postTagService;
 
@@ -67,14 +73,15 @@ public class PostService implements IPostService{
 
     }
 
-    private Post contructPost(Task s){
+    @Transactional
+    public Post contructPost(Task s){
         Post p = new Post();
+        p = postRepo.save(p);
+
         System.err.println(s.getWriteResponse().getTags());
         p.setCreatedAt(String.valueOf(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)));
         p.setWriteRequest(s.getWriteRequest());
         p.setWriteResponse(s.getWriteResponse());
-
-        p = postRepo.save(p);
 
         if(s.getWriteResponse().getTags() == null){
             p.setStatus(PostStatus.GETTING_TAGS.name());
@@ -100,6 +107,7 @@ public class PostService implements IPostService{
 
     @Scheduled(fixedDelay = 5000)
     @Override
+    @Transactional
     public void flushToDb() {
 
         log.info("Flushing to database ....");
