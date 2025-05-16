@@ -41,8 +41,7 @@ public class AiCallThread implements Callable<WriteResponse> {
         wres.setStartTs(startTimestamp);
 
         ModelRequest modelRequest = new ModelRequest("llama3.2", writeRequest.getBody(), false);
-        //String body = generate(modelRequest);
-        String body = "the writeer ai....";
+        String body = generate(modelRequest);
         if(body == null){
             wres.setPlainResponse(null);
             long endTimestamp = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
@@ -52,13 +51,11 @@ public class AiCallThread implements Callable<WriteResponse> {
         wres.setPlainResponse(body);
 
         ModelRequest modelRequest1 = new ModelRequest("llama3.2", "Give me one title for this and nothing more without quotes just a single title: " + body, false);
-        //String title = generate(modelRequest1);
-        String title = "hello";
+        String title = generate(modelRequest1);
         wres.setTitle(title);
 
         ModelRequest modelRequest2 = new ModelRequest("llama3.2", "Give me few tags for this only make it one line and sperated with commas and nothing more: " + body, false);
-        //String tags = generate(modelRequest2);
-        String tags = "java, oop, ko";
+        String tags = generate(modelRequest2);
         wres.setTags(tags);
 
         long endTimestamp = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);

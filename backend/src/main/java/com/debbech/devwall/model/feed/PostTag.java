@@ -13,6 +13,9 @@ public class PostTag {
 
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     private String name;
     @ManyToMany(mappedBy = "tags")
     @JsonBackReference

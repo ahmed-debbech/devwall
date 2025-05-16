@@ -37,6 +37,10 @@ public class PostTagService implements IPostTagService{
             }
         }
 
+        for(PostTag pt : postTags){
+            tagRepo.save(pt);
+        }
+
         return postTags;
     }
 }
