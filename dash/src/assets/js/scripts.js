@@ -107,14 +107,6 @@ $(function() {
     minHeight: $(window).outerHeight() - 95
   })
 
-  $(".nav-collapse-toggle").click(function() {
-    $(this).parent().find('.navbar-nav').toggleClass('show');
-    return false;
-  });
-
-  $(document).on('click', function(e) {
-    $(".nav-collapse .navbar-nav").removeClass('show');
-  });
 
   var toggle_sidebar_mini = function(mini) {
     let body = $('body');

@@ -4,15 +4,13 @@ import com.debbech.devwall.logic.ai.IInMemoryStore;
 import com.debbech.devwall.logic.ai.IQueueProcessor;
 import com.debbech.devwall.logic.feed.IPostService;
 import com.debbech.devwall.model.ai.Task;
-import com.debbech.devwall.model.ai.WriteRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("/")
+@RestController("/ai")
 public class AiController {
 
     @Autowired
@@ -30,10 +28,6 @@ public class AiController {
         return ResponseEntity.ok().body(taks);
     }
 
-    @GetMapping("/write")
-    void wr(){
-        postService.generateNewPost();
-    }
 
 }
 

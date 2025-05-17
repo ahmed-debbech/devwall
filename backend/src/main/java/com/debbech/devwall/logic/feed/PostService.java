@@ -13,6 +13,8 @@ import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -55,7 +57,7 @@ public class PostService implements IPostService{
         return sb.toString();
     }
 
-    //@Scheduled(cron = "*/60 * * * * *")
+    @Scheduled(cron = "* */10 * * * *")
     @Override
     public void generateNewPost() {
         log.info("generating a new post");
@@ -137,5 +139,13 @@ public class PostService implements IPostService{
             i++;
         }
 
+    }
+
+    @Override
+    public List<Post> getAllPaginated(int page_number) {
+
+        Pageable page = PageRequest.of(page_number, 5);
+        List<Post> posts = postRepo.getAllDonePosts(page);
+        return posts;
     }
 }
