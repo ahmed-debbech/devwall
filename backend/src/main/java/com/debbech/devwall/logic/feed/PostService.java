@@ -57,7 +57,7 @@ public class PostService implements IPostService{
         return sb.toString();
     }
 
-    @Scheduled(cron = "* */10 * * * *")
+    @Scheduled(cron = "0 0/30 * * * *")
     @Override
     public void generateNewPost() {
         log.info("generating a new post");

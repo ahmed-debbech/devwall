@@ -10,6 +10,7 @@ import { PostComponent } from './components/post/post.component';
 import { NotFoundComponent } from './components/notfound/notfound.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { MarkdownComponent } from './components/markdown/markdown.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { MarkdownComponent } from './components/markdown/markdown.component';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     MarkdownModule.forRoot()
   ],
