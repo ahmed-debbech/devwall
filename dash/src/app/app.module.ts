@@ -11,6 +11,7 @@ import { NotFoundComponent } from './components/notfound/notfound.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { MarkdownComponent } from './components/markdown/markdown.component';
 import { HttpClientModule } from '@angular/common/http';
+import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    InfiniteScrollDirective,
     MarkdownModule.forRoot()
   ],
   providers: [],
