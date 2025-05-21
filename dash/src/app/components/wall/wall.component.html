@@ -58,27 +58,20 @@
             <div class="card-stats-items">
               <div class="card-stats-item">
                 <div class="card-stats-item-count">24</div>
-                <div class="card-stats-item-label">Pending</div>
+                <div class="card-stats-item-label">Posts</div>
               </div>
               <div class="card-stats-item">
-                <div class="card-stats-item-count">12</div>
-                <div class="card-stats-item-label">Shipping</div>
+                <div class="card-stats-item-count">5695125</div>
+                <div class="card-stats-item-label">Readers</div>
               </div>
               <div class="card-stats-item">
-                <div class="card-stats-item-count">23</div>
-                <div class="card-stats-item-label">Completed</div>
+                <div class="card-stats-item-count">2396969</div>
+                <div class="card-stats-item-label">Read Posts</div>
               </div>
             </div>
           </div>
           <div class="card-stats">
-            <div class="card-stats-title">
-              <div class="dropdown d-inline">
-
-              </div>
-            </div>
-            <div class="card-stats-items">
             
-            </div>
           </div>
         </div>
 
@@ -99,7 +92,7 @@
           <a  [routerLink]='["/posts", post.id]'>
             <h4 class="text-wrap">{{post.title}}</h4>
           </a>
-          <p>{{post.createdAt}}</p>
+          <p>{{mom.unix(parseInt(post.createdAt)).fromNow()}}</p>
         </div>
 
         <div class="card-header-action d-flex justify-content-end gap-2">
@@ -120,12 +113,6 @@
           <a href="#" class="btn btn-light btn-sm"><i class="fas fa-lightbulb"></i> Not Useful
             ({{post.notUseful}})</a>
 
-          <a href="#" class="btn mr-1 btn-github">
-            <i class="far fa-paper-plane"></i>
-          </a>
-          <a href="#" class="btn mr-1 btn-github">
-            <i class="far fa-paper-plane"></i>
-          </a>
           <a href="#" class="btn mr-1 btn-github">
             <i class="far fa-paper-plane"></i>
           </a>

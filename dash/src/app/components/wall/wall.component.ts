@@ -10,7 +10,7 @@ import { PostService } from 'src/app/services/post/post.service';
 })
 export class WallComponent {
 
-
+  mom = moment;
   page_number : number = 0;
   posts : Post[] = [];
   
@@ -21,6 +21,10 @@ export class WallComponent {
    this.postService.getAllPaginatedPosts(this.page_number).subscribe((res) => {
     this.posts = res
    })
+  }
+
+  parseInt(s : string) : number{
+    return parseInt(s)
   }
 
   onScrollLoadData() {
