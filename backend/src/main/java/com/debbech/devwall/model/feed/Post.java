@@ -24,6 +24,7 @@ public class Post {
     private String title;
     private String createdAt;
     private String status;
+    private String randomId;
 
     @Column(length = 4096)
     private String body;
@@ -56,10 +57,20 @@ public class Post {
                 ", title='" + title + '\'' +
                 ", createdAt='" + createdAt + '\'' +
                 ", status='" + status + '\'' +
+                ", randomId='" + randomId + '\'' +
                 ", body='" + body + '\'' +
+                ", tags=" + tags +
                 ", writeRequest=" + writeRequest +
                 ", writeResponse=" + writeResponse +
                 '}';
+    }
+
+    public String getRandomId() {
+        return randomId;
+    }
+
+    public void setRandomId(String randomId) {
+        this.randomId = randomId;
     }
 
     public Set<PostTag> getTags() {

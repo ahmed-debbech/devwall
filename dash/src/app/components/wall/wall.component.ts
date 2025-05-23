@@ -18,8 +18,10 @@ export class WallComponent {
   constructor(private postService : PostService){}
 
   ngOnInit(){
+    console.log("kdkd")
    this.postService.getAllPaginatedPosts(this.page_number).subscribe((res) => {
     this.posts = res
+    this.page_number++
    })
   }
 
@@ -28,9 +30,9 @@ export class WallComponent {
   }
 
   onScrollLoadData() {
-    console.log("hello")
-    this.postService.getAllPaginatedPosts(this.page_number++).subscribe((res) => {
+    this.postService.getAllPaginatedPosts(this.page_number).subscribe((res) => {
       this.posts.push(...res)
+      this.page_number++
     })
   }
 }

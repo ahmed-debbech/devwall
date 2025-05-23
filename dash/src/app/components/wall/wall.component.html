@@ -89,7 +89,7 @@
     <div *ngFor="let post of posts" class="card">
       <div class="card-header">
         <div class="author-box-name">
-          <a  [routerLink]='["/posts", post.id]'>
+          <a  [routerLink]='["/posts", post.randomId]'>
             <h4 class="text-wrap">{{post.title}}</h4>
           </a>
           <p>{{mom.unix(parseInt(post.createdAt)).fromNow()}}</p>
@@ -119,7 +119,7 @@
           <div class="w-100 d-sm-none"></div>
 
           <div class="float-right mt-sm-0 mt-3">
-            <a [routerLink]='["/posts", post.id]' class="btn">Expand more <i class="fas fa-chevron-right"></i></a>
+            <a [routerLink]='["/posts", post.randomId]' class="btn">Expand more <i class="fas fa-chevron-right"></i></a>
           </div>
         </div>
       </div>

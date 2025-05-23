@@ -11,4 +11,6 @@ public interface IPostService {
     void flushToDb();
 
     List<Post> getAllPaginated(int page_number);
+
+    Post getSinglePostByRandomId(String randomid);
 }

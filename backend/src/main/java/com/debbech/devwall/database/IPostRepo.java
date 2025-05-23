@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface IPostRepo extends JpaRepository<Post, Long> {
@@ -14,4 +15,6 @@ public interface IPostRepo extends JpaRepository<Post, Long> {
     @Query("select p from Post p where p.status = 'DONE'")
     List<Post> getAllDonePosts(Pageable pageable);
 
+    @Query("select p from Post p where p.randomId = ?1")
+    Optional<Post> getSinglePostByRandomId(String id);
 }

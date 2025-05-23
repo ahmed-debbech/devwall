@@ -12,6 +12,8 @@ import { MarkdownModule } from 'ngx-markdown';
 import { MarkdownComponent } from './components/markdown/markdown.component';
 import { HttpClientModule } from '@angular/common/http';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
+import { RouteReuseStrategy } from '@angular/router';
+import { CustomReuseStrategy } from './utils/CustomReuseStrategy';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
     InfiniteScrollDirective,
     MarkdownModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: CustomReuseStrategy },
+  ],
   bootstrap: [AppComponent]
   
 })

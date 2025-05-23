@@ -1,30 +1,27 @@
-
 <div class="row">
     <div class="col-md-2 col-lg-2 col-md-2 col-sm-0"></div>
     <div class="col-md-8 col-lg-8 col-md-8 col-sm-12">
         <div class="card">
             <div class="card-header">
-                <h4>Post number {{post.id}}</h4>
+                <h4>Post ID {{post.randomId}}</h4>
             </div>
             <div class="card-body">
-
                 <div class="tickets">
 
+                    <div class="text-primary font-weight-600">
+                        {{mom.unix(parseInt(post.createdAt)).fromNow()}}</div>
                     <div class="ticket-content">
                         <div class="ticket-header">
 
                             <div class="ticket-detail">
                                 <div class="ticket-title">
-                                    <h4>{{post.title}}</h4>
+                                    <h4>{{post.title}} </h4>
                                 </div>
                                 <div class="ticket-info">
                                     <div class="font-weight-600">
-                                        <a  href="#" class="m-1 badge badge-light">Java</a>
-                                        <a  href="#" class="m-1 badge badge-light">Java</a>
-                                        <a  href="#" class="m-1 badge badge-light">Java</a>
+                                        <a *ngFor="let tag of post.tags" href="#"
+                                            class="m-1 badge badge-light">{{tag.name}}</a>
                                     </div>
-                                    <div class="bullet"></div>
-                                    <div class="text-primary font-weight-600">2 min ago</div>
                                 </div>
                             </div>
                         </div>
@@ -36,19 +33,21 @@
                             <div class="ticket-divider"></div>
 
                             <div class="gallery">
-                                <a href="#" class="btn btn-outline-success btn-sm mr-1"><i class="fas fa-lightbulb"></i> Useful</a>
-                                  <a href="#" class="btn btn-outline-danger btn-sm"><i class="fas fa-lightbulb"></i> Not Useful</a>
-                        
-                                  <a href="#" class="btn mr-1 btn-github">
+                                <a href="#" class="btn btn-outline-success btn-sm mr-1"><i class="fas fa-lightbulb"></i>
+                                    Useful</a>
+                                <a href="#" class="btn btn-outline-danger btn-sm"><i class="fas fa-lightbulb"></i> Not
+                                    Useful</a>
+
+                                <a href="#" class="btn mr-1 btn-github">
                                     <i class="far fa-paper-plane"></i>
-                                  </a>
-                                  <a href="#" class="btn mr-1 btn-github">
+                                </a>
+                                <a href="#" class="btn mr-1 btn-github">
                                     <i class="far fa-paper-plane"></i>
-                                  </a>
-                                  <a href="#" class="btn mr-1 btn-github">
+                                </a>
+                                <a href="#" class="btn mr-1 btn-github">
                                     <i class="far fa-paper-plane"></i>
-                                  </a>
-                                  <div class="w-100 d-sm-none"></div>
+                                </a>
+                                <div class="w-100 d-sm-none"></div>
                             </div>
 
                         </div>

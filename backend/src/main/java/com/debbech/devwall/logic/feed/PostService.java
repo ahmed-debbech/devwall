@@ -131,6 +131,7 @@ public class PostService implements IPostService{
         i = 0;
         for(Post p : posts) {
             try {
+                p.setRandomId(generatePostRandId());
                 postRepo.save(p);
                 inMemoryStore.deleteOne(taskList.get(tasksIndex[i]));
             } catch (Exception e) {
@@ -141,11 +142,37 @@ public class PostService implements IPostService{
 
     }
 
+    private String generatePostRandId() {
+        StringBuilder sb = new StringBuilder();
+
+        // A-Z
+        for (char c = 'A'; c <= 'Z'; c++) {
+            sb.append(c);
+        }
+
+        // a-z
+        for (char c = 'a'; c <= 'z'; c++) {
+            sb.append(c);
+        }
+
+        // 0-9
+        for (char c = '0'; c <= '9'; c++) {
+            sb.append(c);
+        }
+
+        return sb.toString();
+    }
+
     @Override
     public List<Post> getAllPaginated(int page_number) {
 
         Pageable page = PageRequest.of(page_number, 5);
         List<Post> posts = postRepo.getAllDonePosts(page);
         return posts;
+    }
+
+    @Override
+    public Post getSinglePostByRandomId(String randomid) {
+        return postRepo.getSinglePostByRandomId(randomid).orElse(null);
     }
 }

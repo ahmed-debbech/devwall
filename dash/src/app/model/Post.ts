@@ -6,6 +6,7 @@ export class Post{
     id : number = 0;
     body : string = "";
     useful : number = 0;
+    randomId : string = ""
     notUseful : number = 0;
     tags : PostTag[] = []
 
