@@ -4,6 +4,7 @@ import { marked } from 'marked';
 import { Post } from 'src/app/model/Post';
 import { PostService } from 'src/app/services/post/post.service';
 import * as moment from 'moment';
+import {Clipboard} from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-post',
@@ -14,8 +15,9 @@ export class PostComponent {
 
   post !: Post
   mom = moment
+  c :string = ""
 
-  constructor(private postService : PostService, private router: Router){}
+  constructor(private postService : PostService, private router: Router, private clipboard : Clipboard){}
 
   parseInt(s : string) : number{
     return parseInt(s)
@@ -29,4 +31,12 @@ export class PostComponent {
  
   }
 
+  copyToCB(id : string){
+    this.clipboard.copy(window.location.href.replace('#', ""))
+    this.c = "URL Copied!"
+    setTimeout(() => {
+      this.c = ""
+    }, 3000)
+  }
+  
 }

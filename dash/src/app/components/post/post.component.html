@@ -37,8 +37,8 @@
                                     ({{post.useful}})</a>
                                   <a href="#" class="btn btn-light btn-sm"><i class="fas fa-lightbulb btn-danger"></i> Not Useful
                                     ({{post.notUseful}})</a>
-                                <a href="#" class="btn mr-1 btn-github">
-                                    <i class="far fa-paper-plane"></i>
+                                <a  (click)="copyToCB( post.randomId )" class="btn mr-1 btn-github">
+                                    <i class="far fa-paper-plane">{{c}}</i>
                                 </a>
                                 
                                 <div class="w-100 d-sm-none"></div>

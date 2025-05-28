@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Post } from 'src/app/model/Post';
 import * as moment from 'moment';
 import { PostService } from 'src/app/services/post/post.service';
+import {Clipboard} from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-wall',
@@ -13,9 +14,9 @@ export class WallComponent {
   mom = moment;
   page_number : number = 0;
   posts : Post[] = [];
-  
+  copiedOne : string = ""
 
-  constructor(private postService : PostService){}
+  constructor(private postService : PostService, private clipboard: Clipboard){}
 
   ngOnInit(){
     console.log("kdkd")
@@ -27,6 +28,14 @@ export class WallComponent {
 
   parseInt(s : string) : number{
     return parseInt(s)
+  }
+
+  copyToCB(id : string){
+    this.clipboard.copy(window.location.href.replace('#', "") +"posts/" +id)
+    this.copiedOne = id
+    setTimeout(() => {
+      this.copiedOne = ""
+    }, 3000)
   }
 
   onScrollLoadData() {
