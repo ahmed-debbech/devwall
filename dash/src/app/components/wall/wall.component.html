@@ -57,15 +57,15 @@
             </div>
             <div class="card-stats-items">
               <div class="card-stats-item">
-                <div class="card-stats-item-count">24</div>
-                <div class="card-stats-item-label">Posts</div>
+                <div class="card-stats-item-count" style="color:#FFC300;">24</div>
+                <div class="card-stats-item-label" >Posts</div>
               </div>
               <div class="card-stats-item">
-                <div class="card-stats-item-count">5695125</div>
+                <div class="card-stats-item-count" style="color:#FFC300;">5695125</div>
                 <div class="card-stats-item-label">Readers</div>
               </div>
               <div class="card-stats-item">
-                <div class="card-stats-item-count">2396969</div>
+                <div class="card-stats-item-count" style="color:#FFC300;">2396969</div>
                 <div class="card-stats-item-label">Read Posts</div>
               </div>
             </div>
@@ -89,7 +89,7 @@
     <div *ngFor="let post of posts" class="card">
       <div class="card-header">
         <div class="author-box-name">
-          <a  [routerLink]='["/posts", post.randomId]'>
+          <a   [routerLink]='["/posts", post.randomId]'>
             <h4 class="text-wrap">{{post.title}}</h4>
           </a>
           <p>{{mom.unix(parseInt(post.createdAt)).fromNow()}}</p>
@@ -105,12 +105,12 @@
         <div class="card-footer">
           <div class="mb-2 mt-3">
             <div class="text-small font-weight-bold">
-              <a *ngFor="let tag of post.tags" href="#" class="m-1 badge badge-outline-light">#{{tag.name}}</a>
+              <a *ngFor="let tag of post.tags" href="#" class="m-1 badge badge-outline-light" style="color:#FFC300;">#{{tag.name}}</a>
             </div>
           </div>
-          <a href="#" class="btn btn-light btn-sm mr-1"><i class="fas fa-lightbulb"></i> Useful
+          <a href="#" class="btn btn-light btn-sm mr-1"><i class="fas fa-lightbulb btn-success"></i> Useful
             ({{post.useful}})</a>
-          <a href="#" class="btn btn-light btn-sm"><i class="fas fa-lightbulb"></i> Not Useful
+          <a href="#" class="btn btn-light btn-sm"><i class="fas fa-lightbulb btn-danger"></i> Not Useful
             ({{post.notUseful}})</a>
 
           <a href="#" class="btn mr-1 btn-github">

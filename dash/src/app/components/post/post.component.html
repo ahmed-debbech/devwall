@@ -8,13 +8,11 @@
             <div class="card-body">
                 <div class="tickets">
 
-                    <div class="text-primary font-weight-600">
-                        {{mom.unix(parseInt(post.createdAt)).fromNow()}}</div>
                     <div class="ticket-content">
                         <div class="ticket-header">
 
                             <div class="ticket-detail">
-                                <div class="ticket-title">
+                                <div class="ticket-title text-primary">
                                     <h4>{{post.title}} </h4>
                                 </div>
                                 <div class="ticket-info">
@@ -23,6 +21,8 @@
                                             class="m-1 badge badge-light">{{tag.name}}</a>
                                     </div>
                                 </div>
+                                <div class="ticket-title mt-1 font-weight-600">
+                                    {{mom.unix(parseInt(post.createdAt)).fromNow()}}</div>
                             </div>
                         </div>
                         <div class="ticket-divider"></div>
@@ -30,23 +30,17 @@
                         <div class="text-start w-100 ticket-description">
                             <app-markdown [text]="post.body"></app-markdown>
 
-                            <div class="ticket-divider"></div>
+                            <div class="ticket-divider mb-1"></div>
 
                             <div class="gallery">
-                                <a href="#" class="btn btn-outline-success btn-sm mr-1"><i class="fas fa-lightbulb"></i>
-                                    Useful</a>
-                                <a href="#" class="btn btn-outline-danger btn-sm"><i class="fas fa-lightbulb"></i> Not
-                                    Useful</a>
-
+                                <a href="#" class="btn btn-light btn-sm mr-1"><i class="fas fa-lightbulb btn-success"></i> Useful
+                                    ({{post.useful}})</a>
+                                  <a href="#" class="btn btn-light btn-sm"><i class="fas fa-lightbulb btn-danger"></i> Not Useful
+                                    ({{post.notUseful}})</a>
                                 <a href="#" class="btn mr-1 btn-github">
                                     <i class="far fa-paper-plane"></i>
                                 </a>
-                                <a href="#" class="btn mr-1 btn-github">
-                                    <i class="far fa-paper-plane"></i>
-                                </a>
-                                <a href="#" class="btn mr-1 btn-github">
-                                    <i class="far fa-paper-plane"></i>
-                                </a>
+                                
                                 <div class="w-100 d-sm-none"></div>
                             </div>
 
