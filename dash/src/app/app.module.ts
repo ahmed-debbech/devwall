@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { RouteReuseStrategy } from '@angular/router';
 import { CustomReuseStrategy } from './utils/CustomReuseStrategy';
+import { PostTagComponent } from './components/post-tag/post-tag.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { CustomReuseStrategy } from './utils/CustomReuseStrategy';
     WallComponent,
     PostComponent,
     NotFoundComponent,
-    MarkdownComponent
+    MarkdownComponent,
+    PostTagComponent
   ],
   imports: [
     BrowserModule,

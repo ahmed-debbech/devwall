@@ -19,7 +19,6 @@ export class WallComponent {
   constructor(private postService : PostService, private clipboard: Clipboard){}
 
   ngOnInit(){
-    console.log("kdkd")
    this.postService.getAllPaginatedPosts(this.page_number).subscribe((res) => {
     this.posts = res
     this.page_number++

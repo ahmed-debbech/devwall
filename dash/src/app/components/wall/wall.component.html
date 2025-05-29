@@ -105,7 +105,7 @@
         <div class="card-footer">
           <div class="mb-2 mt-3">
             <div class="text-small font-weight-bold">
-              <a *ngFor="let tag of post.tags" href="#" class="m-1 badge badge-outline-light" style="color:#FFC300;">#{{tag.name}}</a>
+              <a *ngFor="let tag of post.tags" [routerLink]='["/tags", tag.name]' class="m-1 badge badge-outline-light" style="color:#FFC300;">#{{tag.name}}</a>
             </div>
           </div>
           <a href="#" class="btn btn-light btn-sm mr-1"><i class="fas fa-lightbulb btn-success"></i> Useful
