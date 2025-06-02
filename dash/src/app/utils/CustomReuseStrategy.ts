@@ -3,12 +3,14 @@ import { RouteReuseStrategy, ActivatedRouteSnapshot, DetachedRouteHandle } from 
 export class CustomReuseStrategy implements RouteReuseStrategy {
 
     routesToCache = ["", "tags/:tagname"]
+    forTagsCashe : string[] = []
 
     // A map to cache components, using the route path as the key and the component instance as the value.
     cache: Map<string, DetachedRouteHandle | null> = new Map(); 
 
     // 1. Checks if the route configuration for the target route (future) matches the route configuration for the current route (curr).
     shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
+
       return future.routeConfig === curr.routeConfig;
     }
 

@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface IPostTagRepo extends JpaRepository<PostTag, Long> {
     Optional<PostTag> findByName(String trim);
+
 }

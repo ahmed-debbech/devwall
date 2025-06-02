@@ -3,6 +3,7 @@ import { PostService } from 'src/app/services/post/post.service';
 import * as moment from 'moment';
 import {Clipboard} from '@angular/cdk/clipboard';
 import { Post } from 'src/app/model/Post';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-post-tag',
@@ -16,11 +17,13 @@ export class PostTagComponent {
   page_number : number = 0;
   posts : Post[][] = [];
   copiedOne : string = ""
+  tag : string = ""
 
-  constructor(private postService : PostService, private clipboard: Clipboard){}
+  constructor(private activatedRoute: ActivatedRoute, private postService : PostService, private clipboard: Clipboard){}
 
   ngOnInit(){
-   this.postService.getAllPaginatedPosts(this.page_number).subscribe((res) => {
+    this.tag = this.activatedRoute.snapshot.url[1].path;
+   this.postService.getAllPaginatedPostsByTagName(this.page_number, this.tag).subscribe((res) => {
     this.arrangePosts(res)
     this.page_number++
    })
@@ -55,9 +58,9 @@ export class PostTagComponent {
   }
 
   onScrollLoadData() {
-    this.postService.getAllPaginatedPosts(this.page_number).subscribe((res) => {
+    this.postService.getAllPaginatedPostsByTagName(this.page_number, this.tag).subscribe((res) => {
       this.arrangePosts(res)
       this.page_number++
-    })
+     })
   }
 }

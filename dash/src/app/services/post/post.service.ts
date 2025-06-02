@@ -14,6 +14,10 @@ export class PostService {
     return this.http.get<Post[]>("http://localhost:1400/api/posts?page="+page_number)
   }
 
+  getAllPaginatedPostsByTagName(page_number : number, tag : string) : Observable<Post[]> {
+    return this.http.get<Post[]>("http://localhost:1400/api/tags/"+tag+"?page="+page_number)
+  }
+
   getSinglePostByRandomId(id : string) : Observable<Post> {
     return this.http.get<Post>("http://localhost:1400/api/posts/"+id)
   }

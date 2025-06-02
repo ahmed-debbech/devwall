@@ -17,4 +17,7 @@ public interface IPostRepo extends JpaRepository<Post, Long> {
 
     @Query("select p from Post p where p.randomId = ?1")
     Optional<Post> getSinglePostByRandomId(String id);
+
+    @Query("select p from Post p join p.tags t where p.status = 'DONE' and t.name = ?1")
+    List<Post> getAllDonePostsWithTagName(Pageable k, String t);
 }
