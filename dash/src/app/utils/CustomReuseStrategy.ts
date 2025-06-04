@@ -10,8 +10,12 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
 
     // 1. Checks if the route configuration for the target route (future) matches the route configuration for the current route (curr).
     shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
-
-      return future.routeConfig === curr.routeConfig;
+      
+      console.log("future", future)
+      console.log("curr", curr)
+      if(future.routeConfig === curr.routeConfig) return true
+      
+      return false
     }
 
     // 2. Determines if a cached instance of the component for the target route exists.
@@ -19,7 +23,7 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
     // If it returns false, Angular will create and initialize a new component instance.
     shouldAttach(route: ActivatedRouteSnapshot): boolean {
       const path = this.getPath(route);
-      return this.routesToCache.includes(path) && !!this.cache.get(path);
+      return this.routesToCache.includes(path) && !!this.cache.get(path)
     }
 
     // 3. Retrieves the cached component for the given route.

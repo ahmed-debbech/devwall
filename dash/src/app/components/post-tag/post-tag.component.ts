@@ -18,15 +18,48 @@ export class PostTagComponent {
   posts : Post[][] = [];
   copiedOne : string = ""
   tag : string = ""
+  map : Map<string, PostAndOffset> = new Map()
 
   constructor(private activatedRoute: ActivatedRoute, private postService : PostService, private clipboard: Clipboard){}
 
   ngOnInit(){
+    this.page_number=0
     this.tag = this.activatedRoute.snapshot.url[1].path;
    this.postService.getAllPaginatedPostsByTagName(this.page_number, this.tag).subscribe((res) => {
     this.arrangePosts(res)
+    this.cacheToMap(this.tag)
     this.page_number++
+
    })
+  }
+  
+  ngDoCheck(){
+    if(this.tag != this.activatedRoute.snapshot.url[1].path){
+      this.page_number = 0
+      this.tag = this.activatedRoute.snapshot.url[1].path;
+      let cached = this.getFromCache(this.tag)
+      if(cached) {
+        this.posts = cached.posts
+        this.page_number = cached.offset
+      }else{
+        this.posts = []
+        this.postService.getAllPaginatedPostsByTagName(this.page_number, this.tag).subscribe((res) => {
+          this.arrangePosts(res)
+          this.page_number++
+          this.cacheToMap(this.tag)
+        })
+      }
+      
+    }
+  }
+
+  cacheToMap(tagname : string){
+    let po = new PostAndOffset(this.page_number, this.posts)
+    this.map.set(tagname, po)
+  }
+
+  getFromCache(tagname : string) : PostAndOffset | null{
+    return this.map.get(this.tag) || null
   }
 
   arrangePosts(vpost : Post[]){
@@ -62,5 +95,15 @@ export class PostTagComponent {
       this.arrangePosts(res)
       this.page_number++
      })
+  }
+}
+
+class PostAndOffset{
+  posts : Post[][] = []
+  offset : number = 0
+
+  constructor(p : number, s :  Post[][]){
+    this.posts = s;
+    this.offset = p;
   }
 }
