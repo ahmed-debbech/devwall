@@ -146,17 +146,18 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12 col-lg-12 d-flex flex-column flex-sm-row">
+        <div class="col-12">
             <div class="card">
                 <div class="card-header">
-
                 </div>
                 <div class="collapse show" id="mycard-collapse">
-                    <div class="card-body">
-                        Please wait...
+                    <div *ngIf="loadingNow" class="card-body">
+                        <b>Loading more, Please wait...</b>
+                    </div>
+                    <div *ngIf="!loadingNow" class="card-body">
+                        <b>You are All Caught Up!</b>
                     </div>
                     <div class="card-footer">
-
                     </div>
                 </div>
             </div>
