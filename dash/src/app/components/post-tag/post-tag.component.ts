@@ -19,7 +19,8 @@ export class PostTagComponent {
   copiedOne : string = ""
   tag : string = ""
   loadingNow : boolean = true
-  map : Map<string, PostAndOffset> = new Map()
+  readyToGrabAgain : boolean = true
+  //map : Map<string, PostAndOffset> = new Map()
 
   constructor(private activatedRoute: ActivatedRoute, private postService : PostService, private clipboard: Clipboard){}
 
@@ -29,44 +30,22 @@ export class PostTagComponent {
     this.doGrabPosts()
   }
   
-  ngDoCheck(){
-    if(this.tag != this.activatedRoute.snapshot.url[1].path){
-      this.loadingNow = true
-      this.page_number = 0
-      this.tag = this.activatedRoute.snapshot.url[1].path;
-      let cached = this.getFromCache(this.tag)
-      if(cached) {
-        this.posts = cached.posts
-        this.page_number = cached.offset
-        this.loadingNow = cached.loadingNow
-      }else{
-        this.posts = []
-        this.doGrabPosts()
-      }
-      
-    }
-  }
+ 
 
   doGrabPosts(){
-    this.postService.getAllPaginatedPostsByTagName(this.page_number, this.tag).subscribe((res) => {
+    this.readyToGrabAgain = false
+    let tagg : string = this.tag;
+    this.postService.getAllPaginatedPostsByTagName(this.page_number, tagg).subscribe((res) => {
       if(res.length == 0){
         this.loadingNow = false
+        return
       }else{
         this.loadingNow = true
       }
       this.arrangePosts(res)
       this.page_number++
-      this.cacheToMap(this.tag)
+      this.readyToGrabAgain = true
     })
-  }
-
-  cacheToMap(tagname : string){
-    let po = new PostAndOffset(this.page_number, this.posts, this.loadingNow)
-    this.map.set(tagname, po)
-  }
-
-  getFromCache(tagname : string) : PostAndOffset | null{
-    return this.map.get(tagname) || null
   }
 
   arrangePosts(vpost : Post[]){
@@ -98,7 +77,7 @@ export class PostTagComponent {
   }
 
   onScrollLoadData() {
-    if(this.loadingNow){
+    if(this.loadingNow && this.readyToGrabAgain){
       this.doGrabPosts()
     }
   }

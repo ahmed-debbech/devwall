@@ -13,8 +13,14 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
       
       console.log("future", future)
       console.log("curr", curr)
-      if(future.routeConfig === curr.routeConfig) return true
-      
+      if(future.routeConfig === curr.routeConfig){
+        if((future.url[0]) && (curr.url[0]) && (future.url[0].path == "tags") && (curr.url[0].path == "tags")){
+          if(future.url[1] != curr.url[1]){
+            return false
+          }
+        }
+        return true
+      } 
       return false
     }
 
@@ -23,12 +29,27 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
     // If it returns false, Angular will create and initialize a new component instance.
     shouldAttach(route: ActivatedRouteSnapshot): boolean {
       const path = this.getPath(route);
-      return this.routesToCache.includes(path) && !!this.cache.get(path)
+      if(this.routesToCache.includes(path) && !!this.cache.get(path)){
+        if(route.url[0] && route.url[0].path == "tags"){
+          console.log("should attch?: ", route.url[0].path, route.url[1].path, this.forTagsCashe.includes(route.url[1].path))
+          if(!this.forTagsCashe.includes(route.url[1].path)){
+            return false
+          }
+        }
+        return true
+      }
+      return false
     }
 
     // 3. Retrieves the cached component for the given route.
     retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle | null {
-      const path = this.getPath(route);
+      let path : string = ""
+      if(route.url[0] && route.url[0].path == "tags") {
+        path = "tags/" + route.url[1].path 
+      }else{
+        path = this.getPath(route);
+      }
+      console.log("retriving: ", path, this.cache.get(path))
       return this.cache.get(path) || null;
     }
 
@@ -37,13 +58,30 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
     // If it returns false, Angular destroys the component.
     shouldDetach(route: ActivatedRouteSnapshot): boolean {
       const path = this.getPath(route);
-      return this.routesToCache.includes(path);
+      if(this.routesToCache.includes(path)){
+        if(route.url[0] && route.url[0].path == "tags"){
+          console.log("should dettch?: ", route.url[0].path, route.url[1].path, this.forTagsCashe.includes(route.url[1].path))
+          if(!this.forTagsCashe.includes(route.url[1].path)){
+            this.forTagsCashe.push(route.url[1].path)
+          }
+        }
+        return true
+      }
+      return false
     }
 
     // Stores the component for the given route in the cache
     store(route: ActivatedRouteSnapshot, handle: DetachedRouteHandle | null): void {
-      const path = this.getPath(route);
-      if (this.routesToCache.includes(path) && handle) {
+      const protoPath = this.getPath(route);
+
+      let path : string = ""
+      if(route.url[0] && route.url[0].path == "tags") {
+        path = "tags/" + route.url[1].path 
+      }else{
+        path = this.getPath(route);
+      }
+      console.log("storing: ", path, this.cache.get(path))
+      if (this.routesToCache.includes(protoPath) && handle) {
         this.cache.set(path, handle);
       }
     }
