@@ -11,13 +11,9 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
     // 1. Checks if the route configuration for the target route (future) matches the route configuration for the current route (curr).
     shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
       
-      console.log("future", future)
-      console.log("curr", curr)
       if(future.routeConfig === curr.routeConfig){
-        if((future.url[0]) && (curr.url[0]) && (future.url[0].path == "tags") && (curr.url[0].path == "tags")){
-          if(future.url[1] != curr.url[1]){
-            return false
-          }
+        if((future.url[0]) && (future.url[0].path == "tags") ){
+          return false
         }
         return true
       } 
@@ -29,13 +25,14 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
     // If it returns false, Angular will create and initialize a new component instance.
     shouldAttach(route: ActivatedRouteSnapshot): boolean {
       const path = this.getPath(route);
-      if(this.routesToCache.includes(path) && !!this.cache.get(path)){
+      if(this.routesToCache.includes(path)){
         if(route.url[0] && route.url[0].path == "tags"){
-          console.log("should attch?: ", route.url[0].path, route.url[1].path, this.forTagsCashe.includes(route.url[1].path))
           if(!this.forTagsCashe.includes(route.url[1].path)){
             return false
           }
+          return true
         }
+        if(this.cache.get(path))
         return true
       }
       return false
@@ -49,7 +46,6 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
       }else{
         path = this.getPath(route);
       }
-      console.log("retriving: ", path, this.cache.get(path))
       return this.cache.get(path) || null;
     }
 
@@ -60,7 +56,6 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
       const path = this.getPath(route);
       if(this.routesToCache.includes(path)){
         if(route.url[0] && route.url[0].path == "tags"){
-          console.log("should dettch?: ", route.url[0].path, route.url[1].path, this.forTagsCashe.includes(route.url[1].path))
           if(!this.forTagsCashe.includes(route.url[1].path)){
             this.forTagsCashe.push(route.url[1].path)
           }
@@ -80,7 +75,6 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
       }else{
         path = this.getPath(route);
       }
-      console.log("storing: ", path, this.cache.get(path))
       if (this.routesToCache.includes(protoPath) && handle) {
         this.cache.set(path, handle);
       }
