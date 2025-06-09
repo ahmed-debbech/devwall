@@ -15,6 +15,7 @@ import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { RouteReuseStrategy } from '@angular/router';
 import { CustomReuseStrategy } from './utils/CustomReuseStrategy';
 import { PostTagComponent } from './components/post-tag/post-tag.component';
+import { SearchBarComponent } from './components/nav-bar/search-bar/search-bar.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { PostTagComponent } from './components/post-tag/post-tag.component';
     PostComponent,
     NotFoundComponent,
     MarkdownComponent,
-    PostTagComponent
+    PostTagComponent,
+    SearchBarComponent
   ],
   imports: [
     BrowserModule,
