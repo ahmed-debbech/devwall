@@ -6,9 +6,12 @@
     <div class="search-header">
       Histories
     </div>
-    <div class="search-item">
-      <a href="#">How to hack NASA using CSS</a>
-      <a href="#" class="search-close"><i class="fas fa-times"></i></a>
+    <div *ngFor="let term of terms" class="search-item">
+      <a href="#">{{term}}</a>
+      <a href="#" (click)="deleteTerm(term)" class="search-close"><i class="fas fa-times"></i></a>
+    </div>
+    <div *ngIf="terms.length == 0" class="search-item">
+      <a class="search-header">No search history yet</a>
     </div>
 
   </div>
