@@ -7,7 +7,7 @@
       Histories
     </div>
     <div *ngFor="let term of terms" class="search-item">
-      <a href="#">{{term}}</a>
+      <a  (click)="search(term)">{{term}}</a>
       <a href="#" (click)="deleteTerm(term)" class="search-close"><i class="fas fa-times"></i></a>
     </div>
     <div *ngIf="terms.length == 0" class="search-item">

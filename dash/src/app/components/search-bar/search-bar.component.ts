@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-bar',
@@ -10,10 +11,13 @@ export class SearchBarComponent {
 
   terms : string[] = []
 
+  constructor(private router : Router){}
+  
   ngOnInit(){
     if(localStorage.getItem("dw_search_terms") != null){
       let list = localStorage.getItem("dw_search_terms")!
-      this.terms = JSON.parse(list)    
+      this.terms = JSON.parse(list)
+      this.terms.reverse()    
     }
   }
 
@@ -22,8 +26,12 @@ export class SearchBarComponent {
     if(term.length == 64) return
 
     this.storeTermToLocalStorage(term)
+    
+    let list = localStorage.getItem("dw_search_terms")!
+    this.terms = JSON.parse(list)
 
-    //call network
+    this.router.navigate(['search', term]);
+
   }
 
   storeTermToLocalStorage(term : string){
@@ -36,7 +44,9 @@ export class SearchBarComponent {
     }else{
       list = localStorage.getItem("dw_search_terms")!
       list = JSON.parse(list)
-      list.push(term)
+      if(list[list.length-1] != term){
+        list.push(term)
+      }
     }
     localStorage.setItem("dw_search_terms", JSON.stringify(list))
   }
@@ -49,7 +59,7 @@ export class SearchBarComponent {
     l.splice(l.indexOf(term), 1)
 
     localStorage.setItem("dw_search_terms", JSON.stringify(l))
-    this.terms = l   
+    this.terms = l.reverse()
 
   }
 }

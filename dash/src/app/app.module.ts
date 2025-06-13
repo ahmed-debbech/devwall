@@ -16,6 +16,7 @@ import { RouteReuseStrategy } from '@angular/router';
 import { CustomReuseStrategy } from './utils/CustomReuseStrategy';
 import { PostTagComponent } from './components/post-tag/post-tag.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
     NotFoundComponent,
     MarkdownComponent,
     PostTagComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
