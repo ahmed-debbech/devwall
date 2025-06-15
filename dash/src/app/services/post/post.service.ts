@@ -22,7 +22,7 @@ export class PostService {
     return this.http.get<Post>("http://localhost:1400/api/posts/"+id)
   }
   
-  searchForTermByPage(page : number) : Observable<Post[]> {
-    return [];
+  searchForTermByPage(page_number : number) : Observable<Post[]> {
+    return this.http.get<Post[]>("http://localhost:1400/api/search"+"?page="+page_number)
   }
 }

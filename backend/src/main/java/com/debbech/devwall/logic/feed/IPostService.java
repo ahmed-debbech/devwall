@@ -13,4 +13,6 @@ public interface IPostService {
     List<Post> getAllPaginated(int page_number);
 
     Post getSinglePostByRandomId(String randomid);
+
+    List<Post> searchTermAndPaginate(String term, int page_number);
 }

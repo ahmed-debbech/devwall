@@ -8,7 +8,6 @@ import com.debbech.devwall.model.ai.Task;
 import com.debbech.devwall.model.ai.WriteRequest;
 import com.debbech.devwall.model.feed.Post;
 import com.debbech.devwall.model.feed.PostStatus;
-import com.debbech.devwall.model.feed.PostTag;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +22,6 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 @Service
 public class PostService implements IPostService{
@@ -174,5 +172,12 @@ public class PostService implements IPostService{
     @Override
     public Post getSinglePostByRandomId(String randomid) {
         return postRepo.getSinglePostByRandomId(randomid).orElse(null);
+    }
+
+    @Override
+    public List<Post> searchTermAndPaginate(String term, int page_number) {
+        Pageable page = PageRequest.of(page_number, 5);
+        List<Post> posts = postRepo.getAllDonePosts(page);
+        return posts;
     }
 }
