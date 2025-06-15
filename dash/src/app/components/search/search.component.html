@@ -1,1 +1,83 @@
-<p>search works!</p>
+<div class="row">
+
+    <div class="col-md-4 col-lg-4 d-flex flex-column flex-sm-row">
+  
+      <div class="row">
+        <div class="col">
+        
+            <div id="banner1"  class="mb-5 hero bg-light text-back">
+                <div class="hero-inner">
+                  <h2>Search results for "{{searchTerm}}"</h2>
+                  <p class="lead">
+                  </p>
+                </div>
+             
+              </div>
+        </div>
+      </div>
+  
+    </div>
+    <div class="col-md-8 col-lg-8 col-md-8 col-sm-12 col-xs-12" 
+        infiniteScroll
+        [infiniteScrollDistance]="2"
+        [infiniteScrollThrottle]="50"
+        (scrolled)="onScrollLoadData()"
+    >
+  
+      <div *ngFor="let post of posts" class="card">
+        <div class="card-header">
+          <div class="author-box-name">
+            <a   [routerLink]='["/posts", post.randomId]'>
+              <h4 class="text-wrap">{{post.title}}</h4>
+            </a>
+            <p>{{mom.unix(parseInt(post.createdAt)).fromNow()}}</p>
+          </div>
+  
+          <div class="card-header-action d-flex justify-content-end gap-2">
+          </div>
+        </div>
+        <div class="collapse show" id="mycard-collapse">
+          <div class="card-body">
+            {{post.body}}
+          </div>
+          <div class="card-footer">
+            <div class="mb-2 mt-3">
+              <div class="text-small font-weight-bold">
+                <a *ngFor="let tag of post.tags" [routerLink]='["/tags", tag.name]' class="m-1 badge badge-outline-light" style="color:#FFC300;">#{{tag.name}}</a>
+              </div>
+            </div>
+            <a href="#" class="btn btn-light btn-sm mr-1"><i class="fas fa-lightbulb btn-success"></i> Useful
+              ({{post.useful}})</a>
+            <a href="#" class="btn btn-light btn-sm"><i class="fas fa-lightbulb btn-danger"></i> Not Useful
+              ({{post.notUseful}})</a>
+  
+            <a (click)="copyToCB( post.randomId )"  class="btn mr-1 btn-github">
+              <i class="far fa-paper-plane"><p *ngIf="this.copiedOne == post.randomId">URL Copied !</p></i>
+            </a>
+            <div class="w-100 d-sm-none"></div>
+  
+            <div class="float-right mt-sm-0 mt-3">
+              <a [routerLink]='["/posts", post.randomId]' class="btn">Expand more <i class="fas fa-chevron-right"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-header">
+    
+        </div>
+        <div class="collapse show" id="mycard-collapse">
+          <div class="card-body">
+              Please wait...
+          </div>
+          <div class="card-footer">
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  
+  
+  </div>

@@ -1,5 +1,5 @@
 <div class="search-element">
-  <input #search_term class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250">
+  <input #search_term value="{{termInSearch}}" class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250">
   <button (keyup.enter)="search(search_term.value)" (click)="search(search_term.value)" class="btn" type="submit"><i class="fas fa-search"></i></button>
   <div class="search-backdrop"></div>
   <div class="search-result">

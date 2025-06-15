@@ -21,4 +21,8 @@ export class PostService {
   getSinglePostByRandomId(id : string) : Observable<Post> {
     return this.http.get<Post>("http://localhost:1400/api/posts/"+id)
   }
+  
+  searchForTermByPage(page : number) : Observable<Post[]> {
+    return [];
+  }
 }

@@ -10,6 +10,7 @@ export class SearchBarComponent {
 
 
   terms : string[] = []
+  termInSearch : string = ""
 
   constructor(private router : Router){}
   
@@ -23,14 +24,17 @@ export class SearchBarComponent {
 
   search(term : string){
     console.log(term)
-    if(term.length == 64) return
+    if(term.length >= 64) return
 
+    this.termInSearch = term
     this.storeTermToLocalStorage(term)
     
     let list = localStorage.getItem("dw_search_terms")!
     this.terms = JSON.parse(list)
 
-    this.router.navigate(['search', term]);
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['search', term]);
+    });
 
   }
 
