@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
@@ -140,24 +141,14 @@ public class PostService implements IPostService{
 
     }
 
-    private String generatePostRandId() {
-        StringBuilder sb = new StringBuilder();
-
-        // A-Z
-        for (char c = 'A'; c <= 'Z'; c++) {
-            sb.append(c);
+    public static String generatePostRandId() {
+        final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        final SecureRandom random = new SecureRandom();
+        StringBuilder sb = new StringBuilder(6);
+        for (int i = 0; i < 6; i++) {
+            int index = random.nextInt(CHARACTERS.length());
+            sb.append(CHARACTERS.charAt(index));
         }
-
-        // a-z
-        for (char c = 'a'; c <= 'z'; c++) {
-            sb.append(c);
-        }
-
-        // 0-9
-        for (char c = '0'; c <= '9'; c++) {
-            sb.append(c);
-        }
-
         return sb.toString();
     }
 
@@ -177,7 +168,7 @@ public class PostService implements IPostService{
     @Override
     public List<Post> searchTermAndPaginate(String term, int page_number) {
         Pageable page = PageRequest.of(page_number, 5);
-        List<Post> posts = postRepo.getAllDonePosts(page);
+        List<Post> posts = postRepo.getAllDonePostsWithSearchTerm(term);
         return posts;
     }
 }

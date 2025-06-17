@@ -3,6 +3,7 @@ package com.debbech.devwall.model.feed;
 
 import com.debbech.devwall.model.ai.WriteRequest;
 import com.debbech.devwall.model.ai.WriteResponse;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -60,8 +61,6 @@ public class Post {
                 ", randomId='" + randomId + '\'' +
                 ", body='" + body + '\'' +
                 ", tags=" + tags +
-                ", writeRequest=" + writeRequest +
-                ", writeResponse=" + writeResponse +
                 '}';
     }
 

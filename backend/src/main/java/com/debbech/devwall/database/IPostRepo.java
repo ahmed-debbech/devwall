@@ -20,4 +20,7 @@ public interface IPostRepo extends JpaRepository<Post, Long> {
 
     @Query("select p from Post p join p.tags t where p.status = 'DONE' and t.name = ?1")
     List<Post> getAllDonePostsWithTagName(Pageable k, String t);
+
+    @Query(value = "select * from Post p where p.status = 'DONE' order by SIMILARITY(p.body, '?1') desc limit 50", nativeQuery = true)
+    List<Post> getAllDonePostsWithSearchTerm(String term);
 }
