@@ -1,6 +1,7 @@
 package com.debbech.devwall.logic.feed;
 
 import com.debbech.devwall.model.feed.Post;
+import com.debbech.devwall.model.search.SearchedPost;
 
 import java.util.List;
 
@@ -14,5 +15,5 @@ public interface IPostService {
 
     Post getSinglePostByRandomId(String randomid);
 
-    List<Post> searchTermAndPaginate(String term, int page_number);
+    List<SearchedPost> searchTermAndPaginate(String term, int page_number);
 }

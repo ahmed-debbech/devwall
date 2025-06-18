@@ -8,6 +8,7 @@ import com.debbech.devwall.model.ai.Task;
 import com.debbech.devwall.model.ai.WriteRequest;
 import com.debbech.devwall.model.feed.Post;
 import com.debbech.devwall.model.feed.PostStatus;
+import com.debbech.devwall.model.search.SearchedPost;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -166,9 +167,9 @@ public class PostService implements IPostService{
     }
 
     @Override
-    public List<Post> searchTermAndPaginate(String term, int page_number) {
+    public List<SearchedPost> searchTermAndPaginate(String term, int page_number) {
         Pageable page = PageRequest.of(page_number, 5);
-        List<Post> posts = postRepo.getAllDonePostsWithSearchTerm(term);
+        List<SearchedPost> posts = postRepo.getAllDonePostsWithSearchTerm(term);
         return posts;
     }
 }
