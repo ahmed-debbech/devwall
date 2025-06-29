@@ -42,8 +42,23 @@ public class PostService implements IPostService{
     private IPostTagService postTagService;
 
 
+    private static final String[] TOPICS = {
+            "Write an article exploring how AI is transforming software engineering and the future roles of developers.",
+            "Generate a detailed guide on building scalable microservices architecture with examples and best practices.",
+            "Create an in-depth article about the psychological effects of social media on teenagers, backed by recent studies.",
+            "Write a step-by-step tutorial on setting up a zero-downtime deployment pipeline using Docker and Kubernetes.",
+            "Generate an article comparing renewable energy sources (solar, wind, hydro) in terms of cost, scalability, and environmental impact.",
+            "Write an analysis of how blockchain can disrupt traditional banking and what challenges it faces.",
+            "Produce an article about habits of highly productive remote workers, supported by real-world examples and tools.",
+            "Explain the impact of quantum computing on cybersecurity, and what companies should do to prepare.",
+            "Generate a beginner-friendly article on investing in the stock market, including common strategies and risks.",
+            "Write a futuristic piece on what cities might look like in 2050, considering urban design, transportation, and sustainability trends."
+    };
+
     private String getRandomPrompt(){
-        return "describe what is java in two lines";
+        Random random = new Random();
+        int index = random.nextInt(TOPICS.length);
+        return TOPICS[index];
     }
 
     private String generateName(){
