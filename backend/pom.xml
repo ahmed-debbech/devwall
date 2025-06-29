@@ -12,6 +12,7 @@
 	<artifactId>devwall</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>devwall</name>
+	<packaging>jar</packaging>
 	<description>Dev Wall</description>
 	<url/>
 	<licenses>

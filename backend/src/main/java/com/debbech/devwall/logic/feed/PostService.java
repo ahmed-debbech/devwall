@@ -43,16 +43,16 @@ public class PostService implements IPostService{
 
 
     private static final String[] TOPICS = {
-            "Write an article exploring how AI is transforming software engineering and the future roles of developers.",
-            "Generate a detailed guide on building scalable microservices architecture with examples and best practices.",
-            "Create an in-depth article about the psychological effects of social media on teenagers, backed by recent studies.",
-            "Write a step-by-step tutorial on setting up a zero-downtime deployment pipeline using Docker and Kubernetes.",
-            "Generate an article comparing renewable energy sources (solar, wind, hydro) in terms of cost, scalability, and environmental impact.",
-            "Write an analysis of how blockchain can disrupt traditional banking and what challenges it faces.",
-            "Produce an article about habits of highly productive remote workers, supported by real-world examples and tools.",
-            "Explain the impact of quantum computing on cybersecurity, and what companies should do to prepare.",
-            "Generate a beginner-friendly article on investing in the stock market, including common strategies and risks.",
-            "Write a futuristic piece on what cities might look like in 2050, considering urban design, transportation, and sustainability trends."
+            "Give me something I don't know about Java memory management, especially regarding how the JVM optimizes garbage collection for high-performance applications.",
+            "What are the best tips for writing highly concurrent code in Go without running into race conditions or goroutine leaks?",
+            "How to write SQL queries that remain fast and efficient as the database grows to hundreds of millions of rows?",
+            "Give me something I don’t know about designing resilient microservices that can recover from failure without manual intervention.",
+            "What are the best practices for structuring a large-scale Go project so that it remains testable, modular, and maintainable?",
+            "How to optimize Java applications running on cloud infrastructure to reduce both latency and resource consumption?",
+            "Give me something I don’t know about SQL indexes—how composite and partial indexes can outperform regular indexing strategies in real use cases.",
+            "What are the best tips for debugging complex bugs in distributed systems when logs are incomplete or misleading?",
+            "How to implement and test ACID-compliant transactional logic in Go using PostgreSQL?",
+            "Give me something I don’t know about Java Streams—especially hidden performance traps or advanced use cases in processing large datasets."
     };
 
     private String getRandomPrompt(){
@@ -72,7 +72,8 @@ public class PostService implements IPostService{
         return sb.toString();
     }
 
-    @Scheduled(cron = "0 0/30 * * * *")
+    //@Scheduled(cron = "0 0/30 * * * *")
+    @Scheduled(cron = "*/30 * * * * *")
     @Override
     public void generateNewPost() {
         log.info("generating a new post");
@@ -127,7 +128,7 @@ public class PostService implements IPostService{
     @Transactional
     public void flushToDb() {
 
-        log.info("Flushing to database ....");
+        //log.info("Flushing to database ....");
 
         List<Task> taskList = inMemoryStore.getAll();
         List<Post> posts = new ArrayList<>();

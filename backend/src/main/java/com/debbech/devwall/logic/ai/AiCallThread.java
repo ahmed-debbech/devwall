@@ -89,7 +89,7 @@ public class AiCallThread implements Callable<WriteResponse> {
 
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(Duration.ofMinutes(1))  // Time to establish the connection
-                .readTimeout(Duration.ofMinutes(10))     // Time to wait for the response
+                .readTimeout(Duration.ofMinutes(30))     // Time to wait for the response
                 .writeTimeout(Duration.ofMinutes(5))    // Time to send data (if applicable)
                 .build();
 
