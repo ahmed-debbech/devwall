@@ -48,10 +48,12 @@ public class DuckAiCallThread implements Callable<WriteResponse>  {
         wres.setPlainResponse(body);
 
         ModelRequest modelRequest1 = new ModelRequest("meta-llama/Llama-4-Scout-17B-16E-Instruct", "Give me one title for this and nothing more without quotes just a single title: " + body, false);
+        Thread.sleep(5000);
         String title = generate(modelRequest1);
         wres.setTitle(title);
 
         ModelRequest modelRequest2 = new ModelRequest("meta-llama/Llama-4-Scout-17B-16E-Instruct", "Give me few tags for this only make it one line and sperated with commas and nothing more: " + body, false);
+        Thread.sleep(5000);
         String tags = generate(modelRequest2);
         wres.setTags(tags);
 
@@ -90,13 +92,7 @@ public class DuckAiCallThread implements Callable<WriteResponse>  {
         String resp = this.doNetworkCall(this.host, json);
 
         if(resp != null) {
-
-            ObjectMapper objectMapper = new ObjectMapper();
-            ModelResponse responseObj = objectMapper.readValue(resp, ModelResponse.class);
-
-            if(responseObj.isDone()){
-                return responseObj.getResponse();
-            }
+            return resp;
         }
         return null;
     }
@@ -130,10 +126,8 @@ public class DuckAiCallThread implements Callable<WriteResponse>  {
                 String line;
                 StringBuilder body= new StringBuilder();
                 while ((line = reader.readLine()) != null) {
-                    //System.out.println("Chunk: " + line);
                     if(line.isEmpty()) continue;
                     if(!line.startsWith("data: {\"cre") && !line.startsWith("data: [DON")) {
-                        System.err.println(line);
                         String l = line.substring(6);
                         DuckModelResponse respo;
                         try {
@@ -141,13 +135,15 @@ public class DuckAiCallThread implements Callable<WriteResponse>  {
                         }catch (Exception e){
                             continue;
                         }
-                        System.err.println(respo);
                         body.append(respo.getMessage());
                     }
                 }
                 return body.toString();
             }
         } catch (IOException e) {
+            log.error(e.getMessage());
+
+            e.printStackTrace();
             return null;
         }
     }

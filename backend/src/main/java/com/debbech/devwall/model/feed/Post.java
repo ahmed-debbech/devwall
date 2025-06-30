@@ -27,7 +27,7 @@ public class Post {
     private String status;
     private String randomId;
 
-    @Column(length = 4096)
+    @Column(length = 8192)
     private String body;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
