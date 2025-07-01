@@ -16,7 +16,7 @@ public class WriteRequest {
 
     private String name;
 
-    @Column(length = 4096)
+    @Column(length = 20000)
     private String body;
 
 

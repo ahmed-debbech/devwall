@@ -14,7 +14,7 @@ public class WriteResponse {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 4096)
+    @Column(length = 20000)
     private String plainResponse;
     private String ReqName;
     private String responseGeneratedAt;
