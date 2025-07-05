@@ -7,10 +7,6 @@ import java.util.List;
 
 public interface IPostService {
 
-    void generateNewPost();
-
-    void flushToDb();
-
     List<Post> getAllPaginated(int page_number);
 
     Post getSinglePostByRandomId(String randomid);

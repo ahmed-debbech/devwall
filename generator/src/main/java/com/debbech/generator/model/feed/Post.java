@@ -1,6 +1,8 @@
-package com.debbech.devwall.model.feed;
+package com.debbech.generator.model.feed;
 
 
+import com.debbech.generator.model.ai.WriteRequest;
+import com.debbech.generator.model.ai.WriteResponse;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -29,6 +31,14 @@ public class Post {
     )
     @JsonManagedReference
     private Set<PostTag> tags;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "write_request_id", referencedColumnName = "id")
+    private WriteRequest writeRequest;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "write_response_id", referencedColumnName = "id")
+    private WriteResponse writeResponse;
 
 
     public Post() {
@@ -102,5 +112,21 @@ public class Post {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public WriteRequest getWriteRequest() {
+        return writeRequest;
+    }
+
+    public void setWriteRequest(WriteRequest writeRequest) {
+        this.writeRequest = writeRequest;
+    }
+
+    public WriteResponse getWriteResponse() {
+        return writeResponse;
+    }
+
+    public void setWriteResponse(WriteResponse writeResponse) {
+        this.writeResponse = writeResponse;
     }
 }

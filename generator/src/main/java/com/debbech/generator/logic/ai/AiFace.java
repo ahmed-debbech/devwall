@@ -1,0 +1,31 @@
+package com.debbech.generator.logic.ai;
+
+import com.debbech.generator.model.ai.Task;
+import com.debbech.generator.model.ai.WriteRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+
+@Service
+public class AiFace implements IAiFace{
+
+    private Logger log = LoggerFactory.getLogger(this.getClass());
+
+    @Autowired
+    private IQueueProcessor queueProcessor;
+    @Autowired
+    private IInMemoryStore inMemoryStore;
+
+    @Override
+    public boolean addNewOne(WriteRequest writeRequest) {
+
+        if(!inMemoryStore.addOne(new Task(writeRequest))) return false;
+        queueProcessor.add(writeRequest);
+        return true;
+
+    }
+
+
+}
