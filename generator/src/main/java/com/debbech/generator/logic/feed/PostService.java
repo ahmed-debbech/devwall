@@ -4,6 +4,7 @@ import com.debbech.generator.database.IPostRepo;
 import com.debbech.generator.database.IPostTagRepo;
 import com.debbech.generator.logic.ai.IAiFace;
 import com.debbech.generator.logic.ai.IInMemoryStore;
+import com.debbech.generator.logic.seed.ITopicSeed;
 import com.debbech.generator.model.ai.Task;
 import com.debbech.generator.model.ai.WriteRequest;
 import com.debbech.generator.model.feed.Post;
@@ -43,25 +44,11 @@ public class PostService implements IPostService{
     private IPostTagRepo tagRepo;
     @Autowired
     private IPostTagService postTagService;
-
-
-    private static final String[] TOPICS = {
-            "Give me something I don't know about Java memory management, especially regarding how the JVM optimizes garbage collection for high-performance applications.",
-            "What are the best tips for writing highly concurrent code in Go without running into race conditions or goroutine leaks?",
-            "How to write SQL queries that remain fast and efficient as the database grows to hundreds of millions of rows?",
-            "Give me something I don’t know about designing resilient microservices that can recover from failure without manual intervention.",
-            "What are the best practices for structuring a large-scale Go project so that it remains testable, modular, and maintainable?",
-            "How to optimize Java applications running on cloud infrastructure to reduce both latency and resource consumption?",
-            "Give me something I don’t know about SQL indexes—how composite and partial indexes can outperform regular indexing strategies in real use cases.",
-            "What are the best tips for debugging complex bugs in distributed systems when logs are incomplete or misleading?",
-            "How to implement and test ACID-compliant transactional logic in Go using PostgreSQL?",
-            "Give me something I don’t know about Java Streams—especially hidden performance traps or advanced use cases in processing large datasets."
-    };
+    @Autowired
+    private ITopicSeed topicSeedService;
 
     private String getRandomPrompt(){
-        Random random = new Random();
-        int index = random.nextInt(TOPICS.length);
-        return TOPICS[index];
+        return "Write an article about: "+ this.topicSeedService.consumeTopic();
     }
 
     private String generateName(){
