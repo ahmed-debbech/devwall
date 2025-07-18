@@ -27,6 +27,7 @@ public class StackoverflowTopicSeed implements ITopicSeed{
     public String consumeTopic() throws Exception {
         if(this.topics.isEmpty()) throw new Exception("no topics yet from stackoverflow");
         String topic= this.topics.get(readCounter);
+        log.info("consumed topic at index {}", readCounter);
         readCounter++;
         return topic;
     }

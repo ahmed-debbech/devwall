@@ -49,7 +49,7 @@ public class QueueProcessor implements IQueueProcessor {
         if(wr == null) return;
 
         log.info("a request has been polled to be processed with name: {}", wr.getName());
-        Future<WriteResponse> resultToBe = this.waitQueueProcessor.submit(new DuckAiCallThread(wr, host));
+        Future<WriteResponse> resultToBe = this.waitQueueProcessor.submit(new OpenRouterAiCallThread(wr, host));
         this.postProcessor.execute(new PrepareResponseTread(wr,  resultToBe));
     }
 }

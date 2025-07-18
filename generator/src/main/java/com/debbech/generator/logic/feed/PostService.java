@@ -48,7 +48,16 @@ public class PostService implements IPostService{
     private ITopicSeed topicSeedService;
 
     private String getRandomPrompt() throws Exception {
-        return "Write an article about: "+ this.topicSeedService.consumeTopic();
+
+        String top = this.topicSeedService.consumeTopic();
+        String prompt = """
+                Write a full comprehensive article about %s.
+                The first line should be the title, placed between square brackets like this: [%s].
+                The second line should include some tags, enclosed in square brackets and separated by commas, with no spaces, like this: [tag1,tag2,tag3,tag4,...].
+                After that, write the article normally in clear, well-structured paragraphs.
+                """.formatted(top, top);
+
+        return prompt;
     }
 
     private String generateName(){
