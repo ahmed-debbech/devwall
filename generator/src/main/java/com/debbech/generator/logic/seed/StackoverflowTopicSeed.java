@@ -24,7 +24,8 @@ public class StackoverflowTopicSeed implements ITopicSeed{
     private int readCounter = 0;
 
     @Override
-    public String consumeTopic() {
+    public String consumeTopic() throws Exception {
+        if(this.topics.isEmpty()) throw new Exception("no topics yet from stackoverflow");
         String topic= this.topics.get(readCounter);
         readCounter++;
         return topic;
@@ -46,7 +47,6 @@ public class StackoverflowTopicSeed implements ITopicSeed{
         if(this.currentPageNumber >= 50){
             this.enabled = false;
         }
-        this.currentPageNumber++;
         Elements questions = doc.select("#questions");
 
         Elements elements = questions.select("[id^=question-summary-]");
@@ -55,6 +55,6 @@ public class StackoverflowTopicSeed implements ITopicSeed{
             topics.add(qst);
         }
         log.info("done scapping page {} from stackoverflow", currentPageNumber);
-
+        this.currentPageNumber++;
     }
 }

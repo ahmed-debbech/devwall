@@ -47,7 +47,7 @@ public class PostService implements IPostService{
     @Autowired
     private ITopicSeed topicSeedService;
 
-    private String getRandomPrompt(){
+    private String getRandomPrompt() throws Exception {
         return "Write an article about: "+ this.topicSeedService.consumeTopic();
     }
 
@@ -70,7 +70,13 @@ public class PostService implements IPostService{
             log.info("generating a new post");
             WriteRequest wr = new WriteRequest();
             wr.setName(generateName());
-            String topic = getRandomPrompt();
+            String topic = "";
+            try {
+                topic = getRandomPrompt();
+            }catch(Exception e){
+                log.warn("can not generate new topics");
+                return;
+            }
             wr.setBody(topic);
 
             log.info("asking ai to generate about this topic {}", topic);

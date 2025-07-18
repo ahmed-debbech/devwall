@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface ITopicSeed {
 
-    String consumeTopic();
+    String consumeTopic() throws Exception;
 }
