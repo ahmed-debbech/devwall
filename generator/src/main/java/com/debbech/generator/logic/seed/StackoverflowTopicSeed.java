@@ -29,6 +29,9 @@ public class StackoverflowTopicSeed implements ITopicSeed{
         String topic= this.topics.get(readCounter);
         log.info("consumed topic at index {}", readCounter);
         readCounter++;
+        if(readCounter > this.topics.size()-1){
+            readCounter=0;
+        }
         return topic;
     }
 

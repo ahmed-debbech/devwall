@@ -44,9 +44,18 @@ public class OpenRouterAiCallThread implements Callable<WriteResponse> {
 
         log.info("checking if title + tags + body exist...");
         String result = generate(modelRequest);
-
-        //seeing if title exists
-        
+        log.info("the result of AI {}", result);
+        if(result == null) {
+            wres.setPlainResponse(null);
+            long endTimestamp = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
+            wres.setEndTs(endTimestamp);
+            return wres;
+        }
+        //see if title exists
+        String title = result.split("\n")[0].trim();
+        if(title.startsWith("[") && title.endsWith("]")){
+            wres.setTitle(title.substring(1,title.length()-2));
+        }
 /*        if(body.get)
         wres.setTitle(title);
         wres.setTags(tags);
@@ -91,7 +100,7 @@ public class OpenRouterAiCallThread implements Callable<WriteResponse> {
         Request request = new Request.Builder()
                 .url(aiHost)
                 .post(rb)
-                .header("Authorization", "Bearer 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")
+                .header("Authorization", "Bearer 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")
                 .build();
         log.info("connecting to OpenRouter...");
         try (Response response = client.newCall(request).execute()) { // Auto-closes response
