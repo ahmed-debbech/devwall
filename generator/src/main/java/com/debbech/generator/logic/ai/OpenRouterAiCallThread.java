@@ -56,6 +56,12 @@ public class OpenRouterAiCallThread implements Callable<WriteResponse> {
         if(title.startsWith("[") && title.endsWith("]")){
             wres.setTitle(title.substring(1,title.length()-2));
         }
+
+        //see if tags exists
+        String tags = result.split("\n")[1].trim();
+        if(tags.startsWith("[") && title.endsWith("]")){
+            wres.setTitle(tags.substring(1,tags.length()-2));
+        }
 /*        if(body.get)
         wres.setTitle(title);
         wres.setTags(tags);
