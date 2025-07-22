@@ -49,13 +49,19 @@ public class OpenRouterAiCallThread implements Callable<WriteResponse> {
 
         log.info("checking if title + tags + body exist...");
         String result = generate(modelRequest);
-        log.info("the result of AI {}", result);
+        //log.info("the result of AI {}", result);
         if(result == null) {
             wres.setPlainResponse(null);
             long endTimestamp = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
             wres.setEndTs(endTimestamp);
             return wres;
         }
+
+        //check if model is thinking (e.g: <think></think>)
+        if(result.trim().startsWith("<think>")){
+            result = result.substring(result.trim().indexOf("</think>") + 8);
+        }
+
         //see if title exists
         String title = result.split("\n")[0].trim();
         if(title.startsWith("[") && title.endsWith("]")){
