@@ -14,17 +14,22 @@ import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.stream.Collectors;
 
 public class OpenRouterAiCallThread implements Callable<WriteResponse> {
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
     private WriteRequest writeRequest;
     private String host;
+    private String token;
 
-    public OpenRouterAiCallThread(WriteRequest writeRequest, String hostip){
+    public OpenRouterAiCallThread(WriteRequest writeRequest, String hostip, String token){
         this.writeRequest = writeRequest;
         this.host = hostip;
+        this.token = token;
     }
 
 
@@ -54,19 +59,20 @@ public class OpenRouterAiCallThread implements Callable<WriteResponse> {
         //see if title exists
         String title = result.split("\n")[0].trim();
         if(title.startsWith("[") && title.endsWith("]")){
-            wres.setTitle(title.substring(1,title.length()-2));
+            wres.setTitle(title.substring(1,title.length()-1));
         }
 
         //see if tags exists
         String tags = result.split("\n")[1].trim();
-        if(tags.startsWith("[") && title.endsWith("]")){
-            wres.setTitle(tags.substring(1,tags.length()-2));
+        if(tags.startsWith("[") && tags.endsWith("]")){
+            wres.setTags(tags.substring(1,tags.length()-1));
         }
-/*        if(body.get)
-        wres.setTitle(title);
-        wres.setTags(tags);
-        wres.setPlainResponse(body);
-*/
+
+        //see if body exists
+        String body = Arrays.stream(result.split("\n")).skip(2).collect(Collectors.joining("\n"));
+        if(!body.isEmpty()){
+            wres.setPlainResponse(body);
+        }
 
         long endTimestamp = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
         wres.setEndTs(endTimestamp);
@@ -106,7 +112,7 @@ public class OpenRouterAiCallThread implements Callable<WriteResponse> {
         Request request = new Request.Builder()
                 .url(aiHost)
                 .post(rb)
-                .header("Authorization", "Bearer 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")
+                .header("Authorization", "Bearer "+token)
                 .build();
         log.info("connecting to OpenRouter...");
         try (Response response = client.newCall(request).execute()) { // Auto-closes response

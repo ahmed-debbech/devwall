@@ -18,6 +18,8 @@ public class QueueProcessor implements IQueueProcessor {
 
     @Value("${ai.ip}")
     private String host;
+    @Value("${ai.token}")
+    private String token;
 
     private Queue<WriteRequest> waitQueue;
 
@@ -49,7 +51,7 @@ public class QueueProcessor implements IQueueProcessor {
         if(wr == null) return;
 
         log.info("a request has been polled to be processed with name: {}", wr.getName());
-        Future<WriteResponse> resultToBe = this.waitQueueProcessor.submit(new OpenRouterAiCallThread(wr, host));
+        Future<WriteResponse> resultToBe = this.waitQueueProcessor.submit(new OpenRouterAiCallThread(wr, host, token));
         this.postProcessor.execute(new PrepareResponseTread(wr,  resultToBe));
     }
 }
