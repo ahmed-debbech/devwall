@@ -15,6 +15,8 @@ public class WriteRequest {
     @Column(length = 20000)
     private String body;
 
+    private String title_hash;
+
 
     @Override
     public String toString() {
@@ -22,7 +24,16 @@ public class WriteRequest {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", body='" + body + '\'' +
+                ", title_hash='" + title_hash + '\'' +
                 '}';
+    }
+
+    public String getTitle_hash() {
+        return title_hash;
+    }
+
+    public void setTitle_hash(String title_hash) {
+        this.title_hash = title_hash;
     }
 
     public Long getId() {

@@ -5,6 +5,8 @@ import com.debbech.generator.database.IPostTagRepo;
 import com.debbech.generator.logic.ai.IAiFace;
 import com.debbech.generator.logic.ai.IInMemoryStore;
 import com.debbech.generator.logic.seed.ITopicSeed;
+import com.debbech.generator.logic.seed.StackoverflowTopicSeed;
+import com.debbech.generator.logic.utils.Crypto;
 import com.debbech.generator.model.ai.Task;
 import com.debbech.generator.model.ai.WriteRequest;
 import com.debbech.generator.model.feed.Post;
@@ -47,17 +49,18 @@ public class PostService implements IPostService{
     @Autowired
     private ITopicSeed topicSeedService;
 
-    private String getRandomPrompt() throws Exception {
+    private StackoverflowTopicSeed.TopicHash getRandomPrompt() throws Exception {
 
-        String top = this.topicSeedService.consumeTopic();
+        StackoverflowTopicSeed.TopicHash top = this.topicSeedService.consumeTopic();
         String prompt = """
                 Write a full comprehensive article about %s.
                 The first line should be the title, placed between square brackets like this: [%s].
                 The second line should include some tags, enclosed in square brackets and separated by commas, with no spaces, like this: [tag1,tag2,tag3,tag4,...].
                 After that, write the article normally in clear, well-structured paragraphs.
-                """.formatted(top, top);
+                """.formatted(top.topic, top.topic);
 
-        return prompt;
+        top.topic = prompt;
+        return top;
     }
 
     private String generateName(){
@@ -81,7 +84,9 @@ public class PostService implements IPostService{
             wr.setName(generateName());
             String topic = "";
             try {
-                topic = getRandomPrompt();
+                StackoverflowTopicSeed.TopicHash tp = getRandomPrompt();
+                topic = tp.topic; //prompt
+                wr.setTitle_hash(tp.hash);
             }catch(Exception e){
                 log.warn("can not generate new topics");
                 return;

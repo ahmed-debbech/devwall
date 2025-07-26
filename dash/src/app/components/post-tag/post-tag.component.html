@@ -20,7 +20,7 @@
                 </div>
                 <div class="collapse show" id="mycard-collapse">
                     <div class="card-body">
-                        {{post[0].body}}
+                            {{ post[0].body.slice(0,150) + "..."}}
                     </div>
                     <div class="card-footer">
                         <div class="mb-2 mt-3">
@@ -66,7 +66,7 @@
                 </div>
                 <div class="collapse show" id="mycard-collapse">
                     <div class="card-body">
-                        {{post[1].body}}
+          {{ post[1].body.slice(0,150) + "..."}}
                     </div>
                     <div class="card-footer">
                         <div class="mb-2 mt-3">
@@ -112,7 +112,9 @@
                 </div>
                 <div class="collapse show" id="mycard-collapse">
                     <div class="card-body">
-                        {{post[2].body}}
+
+                        {{ post[2].body.slice(0,150) + "..."}}
+
                     </div>
                     <div class="card-footer">
                         <div class="mb-2 mt-3">

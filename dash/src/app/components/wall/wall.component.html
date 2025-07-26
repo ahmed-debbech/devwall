@@ -100,7 +100,7 @@
       </div>
       <div class="collapse show" id="mycard-collapse">
         <div class="card-body">
-          {{post.body}}
+          {{ post.body.slice(0,150) + "..."}}
         </div>
         <div class="card-footer">
           <div class="mb-2 mt-3">
