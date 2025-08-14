@@ -92,7 +92,7 @@
           <a   [routerLink]='["/posts", post.randomId]'>
             <h4 class="text-wrap">{{post.title}}</h4>
           </a>
-          <p>{{mom.unix(parseInt(post.createdAt)).fromNow()}}</p>
+          <p>{{mom.utc((parseInt(post.createdAt))).local().fromNow()}}</p>
         </div>
 
         <div class="card-header-action d-flex justify-content-end gap-2">

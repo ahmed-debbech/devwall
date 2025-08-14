@@ -22,6 +22,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
@@ -54,10 +55,10 @@ public class PostService implements IPostService{
         StackoverflowTopicSeed.TopicHash top = this.topicSeedService.consumeTopic();
         String prompt = """
                 Write a full comprehensive article about %s.
-                The first line should be the title, placed between square brackets like this: [%s].
+                The first line should be a generated title about the article you gonna write bellow, placed between square brackets like this: [title].
                 The second line should include some tags, enclosed in square brackets and separated by commas, with no spaces, like this: [tag1,tag2,tag3,tag4,...].
                 After that, write the article normally in clear, well-structured paragraphs.
-                """.formatted(top.topic, top.topic);
+                """.formatted(top.topic);
 
         top.topic = prompt;
         return top;
@@ -108,7 +109,7 @@ public class PostService implements IPostService{
         p = postRepo.save(p);
 
         System.err.println(s.getWriteResponse().getTags());
-        p.setCreatedAt(String.valueOf(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)));
+        p.setCreatedAt(String.valueOf(Instant.now().toEpochMilli()));
         p.setWriteRequest(s.getWriteRequest());
         p.setWriteResponse(s.getWriteResponse());
 

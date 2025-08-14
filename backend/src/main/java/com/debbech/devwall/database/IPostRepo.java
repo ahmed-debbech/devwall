@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository
 public interface IPostRepo extends JpaRepository<Post, Long> {
 
-    @Query("select p from Post p where p.status = 'DONE'")
+    @Query("select p from Pofst p where p.status = 'DONE' ORDER BY p.createdAt desc")
     List<Post> getAllDonePosts(Pageable pageable);
 
     @Query("select p from Post p where p.randomId = ?1")

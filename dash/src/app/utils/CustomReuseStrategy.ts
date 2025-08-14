@@ -2,7 +2,7 @@ import { RouteReuseStrategy, ActivatedRouteSnapshot, DetachedRouteHandle } from 
     
 export class CustomReuseStrategy implements RouteReuseStrategy {
 
-    routesToCache = ["", "tags/:tagname"]
+    routesToCache = ["tags/:tagname"]
     forTagsCashe : string[] = []
 
     // A map to cache components, using the route path as the key and the component instance as the value.

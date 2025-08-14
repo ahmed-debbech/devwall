@@ -6,6 +6,7 @@ import com.debbech.generator.model.ai.WriteResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.concurrent.Future;
@@ -31,7 +32,7 @@ public class PrepareResponseTread implements Runnable{
             Task task = new InMemoryStore().getOne(writeRequest.getName());
             task.setWriteResponse(wresp);
 
-            task.setEndingTime(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
+            task.setEndingTime(Instant.now().toEpochMilli());
 
             new InMemoryStore().addOne(task);
         } catch (Exception e) {

@@ -1,5 +1,6 @@
 package com.debbech.generator.model.ai;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
@@ -13,7 +14,7 @@ public class Task {
 
     public Task(WriteRequest wr) {
         this.writeRequest = wr;
-        this.startingTime = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
+        this.startingTime = Instant.now().toEpochMilli();
     }
 
     public WriteRequest getWriteRequest() {

@@ -25,6 +25,7 @@ export class WallComponent {
    })
   }
 
+
   parseInt(s : string) : number{
     return parseInt(s)
   }
@@ -38,6 +39,7 @@ export class WallComponent {
   }
 
   onScrollLoadData() {
+
     this.postService.getAllPaginatedPosts(this.page_number).subscribe((res) => {
       this.posts.push(...res)
       this.page_number++

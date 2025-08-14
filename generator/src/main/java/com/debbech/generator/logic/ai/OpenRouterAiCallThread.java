@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Arrays;
@@ -37,7 +38,7 @@ public class OpenRouterAiCallThread implements Callable<WriteResponse> {
     public WriteResponse call() throws Exception {
 
         log.info("Started processing write request {}", this.writeRequest.getName());
-        long startTimestamp = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
+        long startTimestamp = Instant.now().toEpochMilli();
 
         WriteResponse wres = new WriteResponse();
         wres.setReqName(this.writeRequest.getName());
@@ -52,7 +53,7 @@ public class OpenRouterAiCallThread implements Callable<WriteResponse> {
         //log.info("the result of AI {}", result);
         if(result == null) {
             wres.setPlainResponse(null);
-            long endTimestamp = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
+            long endTimestamp = Instant.now().toEpochMilli();
             wres.setEndTs(endTimestamp);
             return wres;
         }
@@ -80,7 +81,7 @@ public class OpenRouterAiCallThread implements Callable<WriteResponse> {
             wres.setPlainResponse(body);
         }
 
-        long endTimestamp = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
+        long endTimestamp = Instant.now().toEpochMilli();
         wres.setEndTs(endTimestamp);
         return wres;
     }
